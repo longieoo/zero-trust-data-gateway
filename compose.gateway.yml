@@ -1,0 +1,92 @@
+services:
+  opa:
+    image: openpolicyagent/opa:1.4.2
+    command: ["run", "--server", "--addr=0.0.0.0:8181", "--log-level=error", "/policies/engine.rego", "/policies/gateway.rego", "/deployment.json"]
+    volumes:
+      - ./policies:/policies:ro
+      - ./.gateway/server/deployment.json:/deployment.json:ro
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    networks: [backend]
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: gateway_owner
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run setup_gateway.py first}
+      POSTGRES_DB: gateway_db
+      GATEWAY_DB_PASSWORD: ${GATEWAY_DB_PASSWORD:?Run setup_gateway.py first}
+      GATEWAY_SESSION_DB_PASSWORD: ${GATEWAY_SESSION_DB_PASSWORD:?Run portfolio init first}
+    volumes:
+      - gateway_data:/var/lib/postgresql/data
+      - ./scripts/init_gateway_db.sql:/docker-entrypoint-initdb.d/01-data.sql:ro
+      - ./scripts/init_gateway_role.sh:/docker-entrypoint-initdb.d/02-role.sh:ro
+      - ./scripts/gateway_rls.sql:/docker-entrypoint-initdb.d/03-rls.sql:ro
+      - ./scripts/gateway_tenants.sql:/docker-entrypoint-initdb.d/04-tenants.sql:ro
+      - ./scripts/init_gateway_sessions.sh:/docker-entrypoint-initdb.d/05-sessions.sh:ro
+    networks: [backend]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gateway_owner -d gateway_db"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway
+    environment:
+      OPA_URL: http://opa:8181
+      SIMULATION_MODE: "0"
+      DEV_FAILURES: "0"
+      GATEWAY_JWT_SECRET: ${GATEWAY_JWT_SECRET:?Run setup_gateway.py first}
+      GATEWAY_PROXY_SECRET: ${GATEWAY_PROXY_SECRET:?Run setup_gateway.py first}
+      GATEWAY_REGISTRY: /runtime/registry.json
+      GATEWAY_POLICY_FILE: /runtime/policies.json
+      GATEWAY_SESSION_FILE: /state/sessions.sqlite
+      GATEWAY_RELEASE_DIR: /runtime/releases
+      GATEWAY_TRUST_FILE: /runtime/trusted-policy-keys.json
+      GATEWAY_AUDIT_FILE: /state/audit.sqlite
+      GATEWAY_AUDIT_KEY: ${GATEWAY_AUDIT_KEY:?Run portfolio init first}
+      DATABASE_URL: postgresql://gateway_reader:${GATEWAY_DB_PASSWORD}@postgres:5432/gateway_db
+      SESSION_DATABASE_URL: postgresql://gateway_session:${GATEWAY_SESSION_DB_PASSWORD}@postgres:5432/gateway_db
+      OFFICE_NETWORKS: ${OFFICE_NETWORKS:-127.0.0.0/8,::1/128}
+      BUSINESS_TIMEZONE: Asia/Bangkok
+    volumes:
+      - ./.gateway/server:/runtime:ro
+      - gateway_state:/state
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: [/tmp]
+    networks: [backend]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      opa:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=3)"]
+      interval: 3s
+      timeout: 4s
+      retries: 30
+  proxy:
+    image: nginx:1.28-alpine
+    volumes:
+      - ./.gateway/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./.gateway/tls/server.crt:/etc/gateway/tls/server.crt:ro
+      - ./.gateway/tls/server.key:/etc/gateway/tls/server.key:ro
+      - ./.gateway/tls/ca.crt:/etc/gateway/tls/ca.crt:ro
+      - ./.gateway/tls/proxy-headers.conf:/etc/gateway/tls/proxy-headers.conf:ro
+    ports:
+      - "${GATEWAY_BIND:-127.0.0.1}:${GATEWAY_PORT:-28443}:443"
+    networks: [backend, edge]
+    depends_on:
+      gateway:
+        condition: service_healthy
+networks:
+  backend:
+    internal: true
+  edge:
+volumes:
+  gateway_data:
+  gateway_state:

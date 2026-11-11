@@ -1,0 +1,42 @@
+services:
+  opa:
+    image: openpolicyagent/opa:1.4.2
+    command: ["run", "--server", "--addr=0.0.0.0:8181", "--log-level=error", "/policies/engine.rego"]
+    volumes:
+      - ./policies:/policies:ro
+    ports:
+      - "127.0.0.1:${OPA_PORT:-8181}:8181"
+  api:
+    build: .
+    environment:
+      OPA_URL: http://opa:8181
+      SIMULATION_MODE: "1"
+      DEV_FAILURES: "1"
+    volumes:
+      - ./data:/project/data:ro
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import json,urllib.request; assert json.load(urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=3))['opa_ready']"]
+      interval: 5s
+      timeout: 4s
+      retries: 12
+      start_period: 10s
+    depends_on:
+      - opa
+  ui:
+    build: .
+    command: ["streamlit", "run", "ui/streamlit_app.py", "--server.address=0.0.0.0", "--server.port=8501", "--server.headless=true", "--browser.gatherUsageStats=false"]
+    environment:
+      API_URL: http://api:8000
+    ports:
+      - "127.0.0.1:${UI_PORT:-8501}:8501"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; assert urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health',timeout=3).read() == b'ok'"]
+      interval: 5s
+      timeout: 4s
+      retries: 12
+      start_period: 10s

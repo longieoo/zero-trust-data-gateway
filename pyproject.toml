@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zero-trust-abac"
+version = "5.0.0"
+description = "Tenant-isolated data gateway with signed policy releases and decision replay"
+requires-python = ">=3.12"
+dependencies = ["fastapi==0.161.1", "uvicorn==0.34.3", "httpx==0.28.1", "pydantic==2.11.5", "PyJWT==2.15.1", "cryptography==50.0.2", "psycopg[binary]==3.2.10", "psycopg-pool==3.2.6", "tzdata==2026.4"]
+optional-dependencies.gateway = []
+optional-dependencies.lab = ["streamlit==1.66.1", "matplotlib==3.10.3"]
+optional-dependencies.dev = ["pytest==9.1.1", "ruff==0.11.13"]
+
+[tool.setuptools.packages.find]
+include = ["app*", "benchmark*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+
