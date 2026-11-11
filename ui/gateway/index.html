@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zero Trust · Data Access Platform</title><link rel="stylesheet" href="/gateway.css"></head>
+<body><main>
+<header><div class="eyebrow">ZERO TRUST / DATA ACCESS PLATFORM <span class="version">5.0</span></div>
+<h1>Dữ liệu đúng người.<br><span>Quyết định có bằng chứng.</span></h1>
+<p class="intro">Truy cập theo tenant và ngữ cảnh, bảo vệ dữ liệu nhạy cảm, tái lập quyết định và kiểm tra tác động trước khi thay đổi chính sách.</p>
+<div class="flow" aria-label="Luồng kiểm soát"><span>01 · Thiết bị</span><span>02 · Danh tính</span><span>03 · Chính sách</span><span>04 · Dữ liệu</span><span>05 · Kiểm toán</span></div></header>
+<div class="workspace">
+<aside class="panel identity"><div class="section-label">DANH TÍNH & PHIÊN</div><h2>Kết nối an toàn</h2>
+<form id="login"><label>Tài khoản<input id="username" autocomplete="username" required></label>
+<label>Mật khẩu<input id="password" type="password" autocomplete="current-password" required></label><button type="submit">Đăng nhập</button></form>
+<p id="session" role="status">Chưa đăng nhập</p><button id="logout" class="secondary">Đăng xuất & thu hồi</button>
+<div class="note">Tenant được lấy từ tài khoản trên máy chủ. Chứng chỉ client phải được cấp phát và đăng ký trước.</div>
+<button id="policy-status" class="secondary">Xem chính sách đang áp dụng</button><pre id="policy-info">Chưa tải thông tin.</pre></aside>
+<section class="panel"><div class="section-label">KHÔNG GIAN DỮ LIỆU</div><h2>Yêu cầu truy cập</h2>
+<div class="toolbar"><label>Nguồn dữ liệu<select id="resource"><option value="customers">Khách hàng</option><option value="production">Nhật ký sản xuất</option><option value="financial">Báo cáo tài chính</option></select></label><button id="read">Đọc dữ liệu</button></div>
+<div id="status" role="status">Hãy đăng nhập và chọn nguồn dữ liệu.</div>
+<p class="hint">Mỗi lần đọc trả tối đa 100 dòng. Đây là dữ liệu tổng hợp phục vụ thực nghiệm.</p>
+<div class="table-wrap" id="data"></div><details><summary>Quyết định, phạm vi và nghĩa vụ bảo vệ</summary><pre id="evidence"></pre></details>
+</section></div>
+<section class="panel"><div class="section-label">DECISION REPLAY</div><div class="section-head"><div><h2>Lịch sử & tái lập quyết định</h2><p>Đọc lại snapshot tại thời điểm đánh giá; không truy vấn lại dữ liệu nghiệp vụ.</p></div><button id="refresh-audit">Tải lịch sử</button></div>
+<p class="hint">Nhân viên xem lịch sử của mình; admin xem trong tenant. MATCH xác nhận quyết định tái lập khớp, không chứng minh lại các dòng dữ liệu đã đọc.</p>
+<div class="table-wrap" id="audit-list"></div><pre id="replay-result" aria-live="polite">Chọn một quyết định trong lịch sử để replay.</pre></section>
+<section class="panel"><div class="section-label">POLICY IMPACT · TENANT ADMIN</div><h2>Đánh giá tác động trước khi phát hành</h2>
+<p>So sánh một đề xuất đã ký với các quyết định lịch sử trên cùng snapshot. Việc kích hoạt yêu cầu hai khóa phê duyệt độc lập qua quy trình quản trị.</p>
+<div class="toolbar"><label class="wide">Mã revision của đề xuất<input id="candidate" maxlength="64" placeholder="SHA-256 của đề xuất đã ký" spellcheck="false"></label><button id="impact">Phân tích tác động</button></div><pre id="impact-result" aria-live="polite">Chưa có kết quả phân tích.</pre></section>
+<footer><strong>Portfolio engineering lab</strong> · PostgreSQL RLS + SQL masking · OPA · mTLS<br>Dữ liệu giả lập; mô hình rủi ro heuristic. Kết quả kiểm thử và giới hạn triển khai được công bố trong tài liệu dự án.</footer>
+</main><script src="/gateway.js" defer></script></body></html>
