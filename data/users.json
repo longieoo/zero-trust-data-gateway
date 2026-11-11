@@ -1,0 +1,57 @@
+[
+  {
+    "attributes": {
+      "id": "admin",
+      "role": "admin",
+      "department": "data",
+      "clearance": "restricted"
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 86400
+  },
+  {
+    "attributes": {
+      "id": "engineer",
+      "role": "data_engineer",
+      "department": "data",
+      "clearance": "restricted"
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 86400
+  },
+  {
+    "attributes": {
+      "id": "risk",
+      "role": "risk_analyst",
+      "department": "risk",
+      "clearance": "confidential"
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 86400
+  },
+  {
+    "attributes": {
+      "id": "marketing",
+      "role": "marketing_analyst",
+      "department": "marketing",
+      "clearance": "internal"
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 86400
+  },
+  {
+    "attributes": {
+      "id": "intern",
+      "role": "intern",
+      "department": "data",
+      "clearance": "public"
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 86400
+  }
+]

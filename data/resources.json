@@ -1,0 +1,57 @@
+[
+  {
+    "attributes": {
+      "id": "public_report",
+      "type": "report",
+      "department": "marketing",
+      "sensitivity": "public"
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 86400
+  },
+  {
+    "attributes": {
+      "id": "customer_dataset",
+      "type": "dataset",
+      "department": "marketing",
+      "sensitivity": "confidential"
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 86400
+  },
+  {
+    "attributes": {
+      "id": "risk_dataset",
+      "type": "dataset",
+      "department": "risk",
+      "sensitivity": "confidential"
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 86400
+  },
+  {
+    "attributes": {
+      "id": "production_db",
+      "type": "database",
+      "department": "data",
+      "sensitivity": "restricted"
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 86400
+  },
+  {
+    "attributes": {
+      "id": "finance_records",
+      "type": "records",
+      "department": "finance",
+      "sensitivity": "restricted"
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 86400
+  }
+]

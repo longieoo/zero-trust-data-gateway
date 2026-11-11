@@ -1,0 +1,114 @@
+[
+  {
+    "name": "Trusted low-risk workday",
+    "request": {
+      "subject_id": "engineer",
+      "resource_id": "production_db",
+      "action": "read",
+      "baseline": "context_abac",
+      "strategy": "deny-overrides",
+      "context": {
+        "device_trusted": true,
+        "location": "office",
+        "time": "2026-01-15T10:00:00Z",
+        "risk_score": 20
+      }
+    }
+  },
+  {
+    "name": "Untrusted device",
+    "request": {
+      "subject_id": "engineer",
+      "resource_id": "production_db",
+      "action": "read",
+      "baseline": "context_abac",
+      "strategy": "deny-overrides",
+      "context": {
+        "device_trusted": false,
+        "location": "office",
+        "time": "2026-01-15T10:00:00Z",
+        "risk_score": 20
+      }
+    }
+  },
+  {
+    "name": "High risk",
+    "request": {
+      "subject_id": "engineer",
+      "resource_id": "production_db",
+      "action": "read",
+      "baseline": "context_abac",
+      "strategy": "deny-overrides",
+      "context": {
+        "device_trusted": true,
+        "location": "office",
+        "time": "2026-01-15T10:00:00Z",
+        "risk_score": 90
+      }
+    }
+  },
+  {
+    "name": "Outside work hours",
+    "request": {
+      "subject_id": "engineer",
+      "resource_id": "production_db",
+      "action": "read",
+      "baseline": "context_abac",
+      "strategy": "deny-overrides",
+      "context": {
+        "device_trusted": true,
+        "location": "office",
+        "time": "2026-01-15T22:00:00Z",
+        "risk_score": 20
+      }
+    }
+  },
+  {
+    "name": "Unexpected location",
+    "request": {
+      "subject_id": "engineer",
+      "resource_id": "production_db",
+      "action": "read",
+      "baseline": "context_abac",
+      "strategy": "deny-overrides",
+      "context": {
+        "device_trusted": true,
+        "location": "external",
+        "time": "2026-01-15T10:00:00Z",
+        "risk_score": 20
+      }
+    }
+  },
+  {
+    "name": "Untrusted and high risk",
+    "request": {
+      "subject_id": "engineer",
+      "resource_id": "production_db",
+      "action": "read",
+      "baseline": "context_abac",
+      "strategy": "deny-overrides",
+      "context": {
+        "device_trusted": false,
+        "location": "office",
+        "time": "2026-01-15T10:00:00Z",
+        "risk_score": 90
+      }
+    }
+  },
+  {
+    "name": "Medium risk",
+    "request": {
+      "subject_id": "engineer",
+      "resource_id": "production_db",
+      "action": "read",
+      "baseline": "context_abac",
+      "strategy": "deny-overrides",
+      "context": {
+        "device_trusted": true,
+        "location": "office",
+        "time": "2026-01-15T10:00:00Z",
+        "risk_score": 50
+      }
+    }
+  }
+]

@@ -1,0 +1,57 @@
+{
+  "admin": {
+    "attributes": {
+      "device_trusted": true,
+      "location": "office",
+      "time": "2026-01-15T10:00:00Z",
+      "risk_score": 20
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 3600
+  },
+  "engineer": {
+    "attributes": {
+      "device_trusted": true,
+      "location": "office",
+      "time": "2026-01-15T10:00:00Z",
+      "risk_score": 20
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 3600
+  },
+  "risk": {
+    "attributes": {
+      "device_trusted": true,
+      "location": "office",
+      "time": "2026-01-15T10:00:00Z",
+      "risk_score": 20
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 3600
+  },
+  "marketing": {
+    "attributes": {
+      "device_trusted": true,
+      "location": "office",
+      "time": "2026-01-15T10:00:00Z",
+      "risk_score": 20
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 3600
+  },
+  "intern": {
+    "attributes": {
+      "device_trusted": true,
+      "location": "office",
+      "time": "2026-01-15T10:00:00Z",
+      "risk_score": 20
+    },
+    "source": "synthetic-server-snapshot",
+    "timestamp": "2026-10-07T02:03:27.064813+00:00",
+    "ttl_seconds": 3600
+  }
+}
