@@ -1,0 +1,40 @@
+{
+  "executed_at": "2026-10-23T08:06:25.933481+00:00",
+  "measured_samples": 300,
+  "warmup_samples": 30,
+  "workload": "customers; analyst; TLS verified; 100-row cap; audit ON; shared PostgreSQL sessions",
+  "percentile_method": "nearest rank",
+  "limitations": "Single local host, closed-loop load, other projects may share CPU; no production capacity claim",
+  "runs": [
+    {
+      "concurrency": 1,
+      "requests": 100,
+      "elapsed_seconds": 7.354329599999801,
+      "p50_ms": 72.00479999983145,
+      "p95_ms": 92.00310000005629,
+      "rps": 13.59743245665828,
+      "errors": 0,
+      "opa_eval_p50_ms": 1.148733
+    },
+    {
+      "concurrency": 5,
+      "requests": 100,
+      "elapsed_seconds": 2.7770276999999624,
+      "p50_ms": 125.39289999995162,
+      "p95_ms": 203.71019999993223,
+      "rps": 36.009723633653834,
+      "errors": 0,
+      "opa_eval_p50_ms": 1.380629
+    },
+    {
+      "concurrency": 10,
+      "requests": 100,
+      "elapsed_seconds": 2.2971002000003864,
+      "p50_ms": 212.39029999969716,
+      "p95_ms": 306.4918000000034,
+      "rps": 43.53314670382388,
+      "errors": 0,
+      "opa_eval_p50_ms": 1.21698
+    }
+  ]
+}
