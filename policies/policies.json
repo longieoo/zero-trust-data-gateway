@@ -1,0 +1,402 @@
+[
+  {
+    "id": "P01",
+    "description": "The role grants this action.",
+    "target": [],
+    "conditions": [
+      {
+        "path": [
+          "subject",
+          "role"
+        ],
+        "op": "in",
+        "value": [
+          "admin",
+          "data_engineer",
+          "risk_analyst",
+          "marketing_analyst"
+        ]
+      },
+      {
+        "path": [
+          "action"
+        ],
+        "op": "eq",
+        "value": "read"
+      }
+    ],
+    "effect": "Permit",
+    "priority": 10,
+    "version": "1.0.0",
+    "reason_code": "ROLE_PERMISSION",
+    "baselines": [
+      "rbac",
+      "static_abac",
+      "context_abac"
+    ],
+    "rationale": "The role grants this action."
+  },
+  {
+    "id": "P02",
+    "description": "Administrators and engineers may write.",
+    "target": [],
+    "conditions": [
+      {
+        "path": [
+          "subject",
+          "role"
+        ],
+        "op": "in",
+        "value": [
+          "admin",
+          "data_engineer"
+        ]
+      },
+      {
+        "path": [
+          "action"
+        ],
+        "op": "eq",
+        "value": "write"
+      }
+    ],
+    "effect": "Permit",
+    "priority": 10,
+    "version": "1.0.0",
+    "reason_code": "WRITE_PERMISSION",
+    "baselines": [
+      "rbac",
+      "static_abac",
+      "context_abac"
+    ],
+    "rationale": "Administrators and engineers may write."
+  },
+  {
+    "id": "P03",
+    "description": "Only administrators may delete.",
+    "target": [],
+    "conditions": [
+      {
+        "path": [
+          "subject",
+          "role"
+        ],
+        "op": "eq",
+        "value": "admin"
+      },
+      {
+        "path": [
+          "action"
+        ],
+        "op": "eq",
+        "value": "delete"
+      }
+    ],
+    "effect": "Permit",
+    "priority": 10,
+    "version": "1.0.0",
+    "reason_code": "ADMIN_DELETE",
+    "baselines": [
+      "rbac",
+      "static_abac",
+      "context_abac"
+    ],
+    "rationale": "Only administrators may delete."
+  },
+  {
+    "id": "P04",
+    "description": "Interns may read public reports.",
+    "target": [
+      {
+        "path": [
+          "subject",
+          "role"
+        ],
+        "op": "eq",
+        "value": "intern"
+      },
+      {
+        "path": [
+          "resource",
+          "type"
+        ],
+        "op": "eq",
+        "value": "report"
+      }
+    ],
+    "conditions": [
+      {
+        "path": [
+          "action"
+        ],
+        "op": "eq",
+        "value": "read"
+      }
+    ],
+    "effect": "Permit",
+    "priority": 10,
+    "version": "1.0.0",
+    "reason_code": "INTERN_REPORT",
+    "baselines": [
+      "rbac",
+      "static_abac",
+      "context_abac"
+    ],
+    "rationale": "Interns may read public reports."
+  },
+  {
+    "id": "P05",
+    "description": "Non-public resources require the same department (administrators excepted).",
+    "target": [
+      {
+        "path": [
+          "resource",
+          "sensitivity"
+        ],
+        "op": "neq",
+        "value": "public"
+      }
+    ],
+    "conditions": [
+      {
+        "path": [
+          "subject",
+          "role"
+        ],
+        "op": "neq",
+        "value": "admin"
+      },
+      {
+        "path": [
+          "subject",
+          "department"
+        ],
+        "op": "neq",
+        "other": [
+          "resource",
+          "department"
+        ]
+      }
+    ],
+    "effect": "Deny",
+    "priority": 80,
+    "version": "1.0.0",
+    "reason_code": "DEPARTMENT_MISMATCH",
+    "baselines": [
+      "static_abac",
+      "context_abac"
+    ],
+    "rationale": "Non-public resources require the same department (administrators excepted)."
+  },
+  {
+    "id": "P06",
+    "description": "Subject clearance must meet resource sensitivity.",
+    "target": [],
+    "conditions": [
+      {
+        "path": [
+          "subject",
+          "clearance"
+        ],
+        "op": "rank_lt",
+        "other": [
+          "resource",
+          "sensitivity"
+        ]
+      }
+    ],
+    "effect": "Deny",
+    "priority": 90,
+    "version": "1.0.0",
+    "reason_code": "INSUFFICIENT_CLEARANCE",
+    "baselines": [
+      "static_abac",
+      "context_abac"
+    ],
+    "rationale": "Subject clearance must meet resource sensitivity."
+  },
+  {
+    "id": "P07",
+    "description": "Deletion of production databases is explicitly prohibited.",
+    "target": [
+      {
+        "path": [
+          "resource",
+          "type"
+        ],
+        "op": "eq",
+        "value": "database"
+      }
+    ],
+    "conditions": [
+      {
+        "path": [
+          "action"
+        ],
+        "op": "eq",
+        "value": "delete"
+      }
+    ],
+    "effect": "Deny",
+    "priority": 100,
+    "version": "1.0.0",
+    "reason_code": "PRODUCTION_DELETE_PROHIBITED",
+    "baselines": [
+      "rbac",
+      "static_abac",
+      "context_abac"
+    ],
+    "rationale": "Deletion of production databases is explicitly prohibited."
+  },
+  {
+    "id": "P08",
+    "description": "Non-public resources require a trusted device.",
+    "target": [
+      {
+        "path": [
+          "resource",
+          "sensitivity"
+        ],
+        "op": "neq",
+        "value": "public"
+      }
+    ],
+    "conditions": [
+      {
+        "path": [
+          "context",
+          "device_trusted"
+        ],
+        "op": "eq",
+        "value": false
+      }
+    ],
+    "effect": "Deny",
+    "priority": 100,
+    "version": "1.0.0",
+    "reason_code": "UNTRUSTED_DEVICE",
+    "baselines": [
+      "context_abac"
+    ],
+    "rationale": "Non-public resources require a trusted device."
+  },
+  {
+    "id": "P09",
+    "description": "Non-public resources require office or VPN location.",
+    "target": [
+      {
+        "path": [
+          "resource",
+          "sensitivity"
+        ],
+        "op": "neq",
+        "value": "public"
+      }
+    ],
+    "conditions": [
+      {
+        "path": [
+          "context",
+          "location"
+        ],
+        "op": "eq",
+        "value": "external"
+      }
+    ],
+    "effect": "Deny",
+    "priority": 90,
+    "version": "1.0.0",
+    "reason_code": "UNEXPECTED_LOCATION",
+    "baselines": [
+      "context_abac"
+    ],
+    "rationale": "Non-public resources require office or VPN location."
+  },
+  {
+    "id": "P10",
+    "description": "Non-public resources cannot be accessed before 08:00 UTC.",
+    "target": [
+      {
+        "path": [
+          "resource",
+          "sensitivity"
+        ],
+        "op": "neq",
+        "value": "public"
+      }
+    ],
+    "conditions": [
+      {
+        "path": [
+          "context",
+          "hour"
+        ],
+        "op": "lt",
+        "value": 8
+      }
+    ],
+    "effect": "Deny",
+    "priority": 90,
+    "version": "1.0.0",
+    "reason_code": "OUTSIDE_HOURS",
+    "baselines": [
+      "context_abac"
+    ],
+    "rationale": "Non-public resources cannot be accessed before 08:00 UTC."
+  },
+  {
+    "id": "P11",
+    "description": "Non-public resources cannot be accessed at or after 18:00 UTC.",
+    "target": [
+      {
+        "path": [
+          "resource",
+          "sensitivity"
+        ],
+        "op": "neq",
+        "value": "public"
+      }
+    ],
+    "conditions": [
+      {
+        "path": [
+          "context",
+          "hour"
+        ],
+        "op": "gte",
+        "value": 18
+      }
+    ],
+    "effect": "Deny",
+    "priority": 90,
+    "version": "1.0.0",
+    "reason_code": "OUTSIDE_HOURS",
+    "baselines": [
+      "context_abac"
+    ],
+    "rationale": "Non-public resources cannot be accessed at or after 18:00 UTC."
+  },
+  {
+    "id": "P12",
+    "description": "Synthetic risk at or above 70 prohibits access.",
+    "target": [],
+    "conditions": [
+      {
+        "path": [
+          "context",
+          "risk_score"
+        ],
+        "op": "gte",
+        "value": 70
+      }
+    ],
+    "effect": "Deny",
+    "priority": 110,
+    "version": "1.0.0",
+    "reason_code": "HIGH_RISK",
+    "baselines": [
+      "context_abac"
+    ],
+    "rationale": "Synthetic risk at or above 70 prohibits access."
+  }
+]
