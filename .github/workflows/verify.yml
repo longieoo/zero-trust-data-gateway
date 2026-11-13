@@ -23,28 +23,15 @@ jobs:
           echo "$(cut -d ' ' -f1 opa.sha256)  opa" | sha256sum -c -
           chmod +x opa
           echo "OPA_BIN=$PWD/opa" >> "$GITHUB_ENV"
-      - name: Lint and automated security regressions
-        run: |
-          python -m ruff check app tests scripts
-          python -m pytest -q --junitxml=evidence/pytest.xml
-          node tests/ui/gateway_session.cjs
-      - name: Fresh local deployment and live failure recovery
-        run: |
-          python -m scripts.portfolio init
-          python -m scripts.portfolio doctor
-          python -m scripts.portfolio up
-          python -m scripts.validate_portfolio
-      - name: Browser verification
-        run: |
-          npm install --no-save playwright@1.62.1
-          npx playwright install --with-deps chromium
-          node tests/ui/portfolio_live.cjs
-      - name: Bounded benchmark
-        run: python -m scripts.benchmark_portfolio
-      - name: Python dependency audit
+      - name: Install audit and browser tooling
         run: |
           python -m pip install -r requirements-audit.txt
-          python -m pip_audit -r requirements-lock.txt -f json -o evidence/dependency-audit.json
+          npm install --no-save playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Initialize isolated demo runtime
+        run: python -m scripts.portfolio init
+      - name: Verify one code state end to end
+        run: python -m scripts.verify_release
       - name: Preserve evidence, never runtime secrets
         if: always()
         uses: actions/upload-artifact@v4

@@ -1,0 +1,32 @@
+{
+  "executed_at": "2026-10-23T13:33:04.412Z",
+  "browser": "Playwright Chromium",
+  "certificate_note": "Browser ignores locally generated server CA errors; client certificate is real. Python E2E verifies server CA.",
+  "checks": [
+    {
+      "name": "trusted UI masking",
+      "pass": true
+    },
+    {
+      "name": "historical replay through UI",
+      "pass": true
+    },
+    {
+      "name": "logout clears data and audit UI",
+      "pass": true
+    },
+    {
+      "name": "mobile layout no page overflow",
+      "pass": true
+    },
+    {
+      "name": "admin policy impact through UI",
+      "pass": true
+    },
+    {
+      "name": "untrusted browser denied with no data",
+      "pass": true
+    }
+  ],
+  "complete": true
+}

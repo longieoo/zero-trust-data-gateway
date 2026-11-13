@@ -100,6 +100,7 @@ def setup(directory, hosts, office_networks, start_hour=0, end_hour=24):
         "analyst": ("marketing_analyst", "marketing", "confidential"),
         "finance": ("risk_analyst", "finance", "restricted"),
         "admin": ("admin", "data", "restricted"),
+        "data_owner": ("admin", "data", "restricted"),
     }
     credentials, rows = {}, {}
     for username, (role, department, clearance) in accounts.items():

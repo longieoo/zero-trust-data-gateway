@@ -1,10 +1,22 @@
 {
-  "executed_at": "2026-10-23T13:33:04.412Z",
+  "executed_at": "2026-11-13T13:39:10.752Z",
   "browser": "Playwright Chromium",
   "certificate_note": "Browser ignores locally generated server CA errors; client certificate is real. Python E2E verifies server CA.",
   "checks": [
     {
       "name": "trusted UI masking",
+      "pass": true
+    },
+    {
+      "name": "bound cursor reads disjoint masked UI pages",
+      "pass": true
+    },
+    {
+      "name": "catalog shows extra approval requirement",
+      "pass": true
+    },
+    {
+      "name": "analyst submits time-bound access request through UI",
       "pass": true
     },
     {
@@ -17,6 +29,10 @@
     },
     {
       "name": "mobile layout no page overflow",
+      "pass": true
+    },
+    {
+      "name": "independent tenant admin approves and revokes through UI",
       "pass": true
     },
     {

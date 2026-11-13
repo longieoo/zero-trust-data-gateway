@@ -6,7 +6,7 @@ import httpx
 
 from app.attribute_provider import DecisionError
 from app.decision import combine
-from app.gateway.database import ViewPlan
+from app.gateway.database import COLUMNS, ViewPlan
 from app.jsonio import strict_json_loads
 from app.opa_client import validate_outcomes
 
@@ -25,7 +25,11 @@ def evaluate_snapshot(client, attributes, release):
     try:
         response = client.post("/v1/data/gateway/evaluation?metrics=true", json={"input": inputs})
         response.raise_for_status()
+        if len(response.content) > 8_000_000:
+            raise ValueError("Oversized decision envelope")
         body = strict_json_loads(response.text)
+        if not isinstance(body, dict) or not isinstance(body.get("result"), dict):
+            raise ValueError("Invalid decision envelope")
         result = body["result"]
         if set(result) != {"revision", "engine_revision", "outcomes", "plan", "contract"}:
             raise ValueError("Invalid decision envelope")
@@ -43,13 +47,25 @@ def evaluate_snapshot(client, attributes, release):
             raise ValueError("Mismatched tenant/resource obligations")
         if plan.policy_revision != release["revision"]:
             raise ValueError("Mismatched obligation revision")
-        if subject["role"] != "admin":
-            if plan.row_scope.kind != "department" or plan.row_scope.value != subject["department"]:
-                raise ValueError("Unsafe department obligations")
-            if plan.resource == "customers" and not {"salary", "email", "national_id"} <= set(
-                plan.mask
-            ):
-                raise ValueError("Missing mandatory masking")
+        # A matching revision label alone does not prove that the obligations
+        # correspond to the signed profile. Enforce the complete supported
+        # obligation contract independently before executing the plan.
+        expected_scope = "all" if subject["role"] == "admin" else "department"
+        expected_department = None if expected_scope == "all" else subject["department"]
+        if (plan.row_scope.kind, plan.row_scope.value) != (expected_scope, expected_department):
+            raise ValueError("Mismatched department obligations")
+        expected_mask = (
+            {"salary", "email", "national_id"}
+            if plan.resource == "customers"
+            and (subject["role"] != "admin" or payload["view"]["mask_admin"])
+            else set()
+        )
+        if set(plan.mask) != expected_mask:
+            raise ValueError("Mask differs from signed view profile")
+        if plan.limit != payload["view"]["limit"]:
+            raise ValueError("Row cap differs from signed view profile")
+        if set(plan.columns) != COLUMNS[plan.resource]:
+            raise ValueError("Incomplete resource column contract")
         return {
             **decision,
             "policy_revision": release["revision"],
@@ -64,7 +80,7 @@ def evaluate_snapshot(client, attributes, release):
         raise DecisionError("OPA_TIMEOUT", "OPA deadline exceeded") from exc
     except httpx.HTTPError as exc:
         raise DecisionError("OPA_UNAVAILABLE", "OPA unavailable") from exc
-    except (ValueError, KeyError, TypeError) as exc:
+    except (ValueError, KeyError, TypeError, AttributeError) as exc:
         raise DecisionError(
             "INVALID_OPA_RESPONSE", "Invalid decision and obligation envelope"
         ) from exc

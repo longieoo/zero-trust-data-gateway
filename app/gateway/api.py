@@ -16,6 +16,7 @@ from uuid import uuid4
 from zoneinfo import ZoneInfo
 
 import jwt
+from cryptography.exceptions import InvalidTag
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
@@ -25,6 +26,8 @@ from app.gateway.database import Database, ViewPlan
 from app.gateway.provider import GatewayProvider
 from app.gateway.security import decode_token, issue_token, verify_password, hash_password
 from app.gateway.sessions import Sessions, PostgresSessions
+from app.gateway.pagination import issue_cursor, read_cursor
+from app.gateway.access import AccessStore, attach_access_routes
 from app.gateway.audit import AuditStore
 from app.gateway.releases import (
     ReleaseRepository,
@@ -137,10 +140,15 @@ def create_app(config=None, database=None, clock=None):
     ]
     ZoneInfo(config["timezone"])
     load_registry(config["registry"])
-    sessions = Sessions(
-        config.get("session_file")
-        or os.getenv("GATEWAY_SESSION_FILE")
-        or str(Path(config["registry"]).parent / "sessions.sqlite")
+    session_url = config.get("session_database_url") or os.getenv("SESSION_DATABASE_URL")
+    sessions = (
+        PostgresSessions(session_url)
+        if session_url
+        else Sessions(
+            config.get("session_file")
+            or os.getenv("GATEWAY_SESSION_FILE")
+            or str(Path(config["registry"]).parent / "sessions.sqlite")
+        )
     )
     audit_store = AuditStore(config["audit_file"], config["audit_key"])
     releases = (
@@ -151,10 +159,6 @@ def create_app(config=None, database=None, clock=None):
     if releases is None and not config.get("allow_unsigned_policies", False):
         raise ValueError("Signed policy releases required")
     db = database or Database(config["database_url"])
-    if config.get("session_database_url") or os.getenv("SESSION_DATABASE_URL"):
-        sessions = PostgresSessions(
-            config.get("session_database_url") or os.environ["SESSION_DATABASE_URL"]
-        )
 
     def active_release():
         if releases:
@@ -167,6 +171,15 @@ def create_app(config=None, database=None, clock=None):
     core.dev_failures = False
     core.policy_path = Path(config["policy_file"])
     get_now = clock or (lambda: datetime.now(timezone.utc))
+    access_store = AccessStore(
+        config.get("access_file") or str(Path(config["audit_file"]).parent / "access.sqlite"),
+        clock=get_now,
+    )
+    grant_required = config.get("grant_required", os.getenv("GATEWAY_GRANT_REQUIRED", ""))
+    if isinstance(grant_required, str):
+        grant_required = [name.strip() for name in grant_required.split(",") if name.strip()]
+    if not set(grant_required) <= {"customers", "financial", "production"}:
+        raise ValueError("Unknown grant-required resource")
     limiter = LoginLimiter()
     dummy_hash = hash_password("nonexistent-account-dummy-password")
 
@@ -179,13 +192,15 @@ def create_app(config=None, database=None, clock=None):
             sessions.close()
 
     app = FastAPI(
-        title="ABAC Data Gateway", version="5.0.0", lifespan=lifespan, docs_url=None, redoc_url=None
+        title="ABAC Data Gateway", version="5.1.0", lifespan=lifespan, docs_url=None, redoc_url=None
     )
     app.state.database = db
     app.state.core = core
     app.state.sessions = sessions
     app.state.audit = audit_store
     app.state.releases = releases
+    app.state.access = access_store
+    app.state.grant_required = frozenset(grant_required)
 
     @app.middleware("http")
     async def private_ingress(request, call_next):
@@ -304,6 +319,7 @@ def create_app(config=None, database=None, clock=None):
     @app.get("/health")
     def health():
         ready = database_ready = policy_ready = audit_ready = False
+        session_ready = access_ready = False
         revision = None
         try:
             release = active_release()
@@ -322,14 +338,23 @@ def create_app(config=None, database=None, clock=None):
             audit_ready = audit_store.ready()
         except Exception:
             pass
+        try:
+            session_ready = sessions.ready()
+            access_ready = access_store.ready()
+        except Exception:
+            pass
         return JSONResponse(
-            status_code=200 if all((ready, database_ready, policy_ready, audit_ready)) else 503,
+            status_code=200
+            if all((ready, database_ready, policy_ready, audit_ready, session_ready, access_ready))
+            else 503,
             content={
-                "version": "5.0.0",
+                "version": "5.1.0",
                 "opa_ready": ready,
                 "database_ready": database_ready,
                 "policy_ready": policy_ready,
                 "audit_ready": audit_ready,
+                "session_ready": session_ready,
+                "access_ready": access_ready,
                 "policy_revision": revision,
             },
         )
@@ -419,6 +444,28 @@ def create_app(config=None, database=None, clock=None):
             raise HTTPException(403, "Trusted location required")
         return subject
 
+    attach_access_routes(app, audit_identity, access_store)
+
+    @app.get("/api/v1/catalog")
+    def catalog(request: Request):
+        subject = audit_identity(request)
+        from app.gateway.provider import RESOURCES
+
+        return {
+            "tenant_id": subject["tenant_id"],
+            "resources": [
+                {
+                    **value,
+                    "pii_columns": ["email", "salary", "national_id"]
+                    if name == "customers"
+                    else [],
+                    "max_page_size": 100,
+                    "grant_required": name in app.state.grant_required,
+                }
+                for name, value in RESOURCES.items()
+            ],
+        }
+
     @app.get("/api/v1/policy")
     def policy_status(request: Request):
         audit_identity(request)
@@ -450,15 +497,21 @@ def create_app(config=None, database=None, clock=None):
         }
 
     def historical(request_id, subject):
-        return audit_store.snapshot(
-            request_id, subject["tenant_id"], None if subject["role"] == "admin" else subject["id"]
-        )
+        try:
+            return audit_store.snapshot(
+                request_id,
+                subject["tenant_id"],
+                None if subject["role"] == "admin" else subject["id"],
+            )
+        except (InvalidTag, ValueError, KeyError, UnicodeError):
+            return None
 
     def replay_snapshot(snapshot):
-        if not snapshot or snapshot.get("schema") != 1:
+        if not isinstance(snapshot, dict) or snapshot.get("schema") != 1:
             return {
                 "status": "UNREPLAYABLE",
                 "reason": "Historical snapshot unavailable or unauthorized",
+                "db_queried": False,
             }
         try:
             release = snapshot["release"]
@@ -477,7 +530,7 @@ def create_app(config=None, database=None, clock=None):
                 "scope": "decision_only_no_historical_rows",
                 "db_queried": False,
             }
-        except (ValueError, KeyError, DecisionError):
+        except (ValueError, KeyError, TypeError, AttributeError, DecisionError):
             return {
                 "status": "UNREPLAYABLE",
                 "reason": "Interpreter or PDP unavailable/incompatible",
@@ -531,8 +584,17 @@ def create_app(config=None, database=None, clock=None):
 
     @app.get("/api/v1/data/{resource}")
     def protected_data(resource: str, request: Request):
-        if request.query_params:
-            raise HTTPException(422, "Gateway does not accept overrides or SQL parameters")
+        params = request.query_params
+        if set(params) - {"page_size", "cursor"} or len(params.multi_items()) != len(params):
+            raise HTTPException(422, "Unsupported or duplicate query parameter")
+        try:
+            page_size = int(params["page_size"]) if "page_size" in params else None
+            if page_size is not None and not 1 <= page_size <= 100:
+                raise ValueError("Page size outside bounds")
+            if "cursor" in params and page_size is None:
+                raise ValueError("Cursor requires page_size")
+        except ValueError:
+            raise HTTPException(422, "Invalid pagination") from None
         started = perf_counter()
         registry = load_registry(config["registry"])
         subject = authenticate(request, registry)
@@ -559,6 +621,24 @@ def create_app(config=None, database=None, clock=None):
                 release = active_release()
             except Exception as exc:
                 raise DecisionError("INVALID_POLICY", "No valid signed active release") from exc
+            after_id = 0
+            if "cursor" in params:
+                try:
+                    after_id = read_cursor(
+                        params["cursor"],
+                        config["secret"],
+                        subject,
+                        request.state.claims["jti"],
+                        resource,
+                        release["revision"],
+                        page_size,
+                        now,
+                    )
+                except ValueError:
+                    event.update(decision="DENY", reason_code="INVALID_CURSOR")
+                    return JSONResponse(
+                        status_code=422, content={"request_id": request.state.request_id, **event}
+                    )
             resolved = provider.resolve(access, now, False)
             evaluation = evaluate_snapshot(core.opa.client, resolved["attributes"], release)
             event.update(
@@ -588,9 +668,22 @@ def create_app(config=None, database=None, clock=None):
                     content={"request_id": request.state.request_id, **event},
                 )
             plan = ViewPlan.model_validate(evaluation["obligations"])
+            if resource in app.state.grant_required:
+                grant = access_store.active_grant(subject, resource)
+                if grant is None:
+                    event.update(decision="DENY", reason_code="ACCESS_APPROVAL_REQUIRED")
+                    return JSONResponse(
+                        status_code=403, content={"request_id": request.state.request_id, **event}
+                    )
+                event["access_request_id"] = grant["request_id"]
             tick = perf_counter()
             event["db_queried"] = True
-            rows = db.query(plan)
+            has_more = False
+            if page_size is not None:
+                plan = plan.model_copy(update={"limit": min(plan.limit, page_size)})
+                rows, has_more = db.page(plan, after_id)
+            else:
+                rows = db.query(plan)
             database_ms = (perf_counter() - tick) * 1000
         except DecisionError as exc:
             event.update(decision="DENY", reason_code=exc.code)
@@ -603,10 +696,29 @@ def create_app(config=None, database=None, clock=None):
                 status_code=503, content={"request_id": request.state.request_id, **event}
             )
         event.update(row_count=len(rows), obligations=plan.model_dump())
+        next_cursor = (
+            issue_cursor(
+                config["secret"],
+                subject,
+                request.state.claims["jti"],
+                resource,
+                release["revision"],
+                page_size,
+                rows[-1]["id"],
+                now,
+            )
+            if has_more and rows
+            else None
+        )
         return {
             "request_id": request.state.request_id,
             **event,
             "data": rows,
+            "pagination": {
+                "page_size": page_size,
+                "has_more": has_more,
+                "next_cursor": next_cursor,
+            },
             "context": {
                 **context,
                 "tenant_id": subject["tenant_id"],

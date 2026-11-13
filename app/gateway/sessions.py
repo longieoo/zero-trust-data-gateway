@@ -52,6 +52,11 @@ class Sessions:
         with self.connect() as database:
             database.execute("DELETE FROM sessions WHERE id = ?", (self.identifier(claims),))
 
+    def ready(self):
+        with self.connect() as database:
+            database.execute("SELECT id,expires FROM sessions LIMIT 0")
+        return True
+
 
 class PostgresSessions:
     """Shared allowlist with a separate role, no active-session cache.
@@ -67,6 +72,12 @@ class PostgresSessions:
 
     def close(self):
         self.pool.close()
+
+    def ready(self):
+        with self.pool.connection() as database:
+            database.execute("SET LOCAL statement_timeout='3s'")
+            database.execute("SELECT id,expires FROM gateway_auth.sessions LIMIT 0")
+        return True
 
     def add(self, claims):
         with self.pool.connection() as database:

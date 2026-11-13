@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-10-23T13:33:16.912636+00:00",
+  "executed_at": "2026-11-13T13:39:23.659662+00:00",
   "measured_samples": 300,
   "warmup_samples": 30,
   "workload": "customers; analyst; TLS verified; 100-row cap; audit ON; shared PostgreSQL sessions",
@@ -9,32 +9,32 @@
     {
       "concurrency": 1,
       "requests": 100,
-      "elapsed_seconds": 5.809621600000014,
-      "p50_ms": 54.84609999996337,
-      "p95_ms": 80.61720000000605,
-      "rps": 17.212825014283162,
+      "elapsed_seconds": 6.872731399998884,
+      "p50_ms": 65.59669999842299,
+      "p95_ms": 90.87819999695057,
+      "rps": 14.550255812414878,
       "errors": 0,
-      "opa_eval_p50_ms": 1.015687
+      "opa_eval_p50_ms": 1.207624
     },
     {
       "concurrency": 5,
       "requests": 100,
-      "elapsed_seconds": 2.010714099999973,
-      "p50_ms": 95.42169999997441,
-      "p95_ms": 142.879999999991,
-      "rps": 49.733574753368146,
+      "elapsed_seconds": 2.1055211999992025,
+      "p50_ms": 95.34619999612914,
+      "p95_ms": 167.66639999696054,
+      "rps": 47.494178638542266,
       "errors": 0,
-      "opa_eval_p50_ms": 1.254051
+      "opa_eval_p50_ms": 1.079316
     },
     {
       "concurrency": 10,
       "requests": 100,
-      "elapsed_seconds": 1.93869559999996,
-      "p50_ms": 182.11970000004385,
-      "p95_ms": 268.77589999992324,
-      "rps": 51.581073377379134,
+      "elapsed_seconds": 2.0099560000016936,
+      "p50_ms": 175.58500000450294,
+      "p95_ms": 286.72009999718284,
+      "rps": 49.75233288684714,
       "errors": 0,
-      "opa_eval_p50_ms": 1.189913
+      "opa_eval_p50_ms": 1.174929
     }
   ]
 }

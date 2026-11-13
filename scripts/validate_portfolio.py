@@ -14,7 +14,7 @@ import httpx
 from cryptography.hazmat.primitives import serialization
 
 from app.gateway.releases import ReleaseRepository, atomic_json, digest, sign_release
-from scripts.portfolio import ROOT, RUNTIME, compose
+from scripts.portfolio import ROOT, RUNTIME, compose, compose_project
 from scripts.seed_portfolio import seed
 
 
@@ -330,7 +330,7 @@ def main():
             repository.activate(original_revision, pointer["revision"])
         report = {
             "executed_at": datetime.now(timezone.utc).isoformat(),
-            "target": "local abac-portfolio",
+            "target": "local " + compose_project(),
             "elapsed_seconds": time.perf_counter() - started,
             "passed": sum(r["pass"] for r in records),
             "checks": records,

@@ -53,12 +53,34 @@ def main():
     output.mkdir(exist_ok=True)
     before, files = fingerprint()
     python = sys.executable
+    stamp = str(time.time_ns())
+    backup = ".gateway/backups/final-" + stamp + ".ztbackup"
     steps = [
         ("lint", [python, "-m", "ruff", "check", "app", "tests", "scripts"]),
         ("pytest", [python, "-m", "pytest", "-q", "--junitxml=evidence/pytest.xml"]),
         ("ui-unit", ["node", "tests/ui/gateway_session.cjs"]),
         ("compose", [python, "-m", "scripts.portfolio", "up"]),
         ("live", [python, "-m", "scripts.validate_portfolio"]),
+        ("governance", [python, "-m", "scripts.validate_governance"]),
+        (
+            "backup",
+            [python, "-m", "scripts.backup_restore", "create", "--output", backup],
+        ),
+        (
+            "restore",
+            [
+                python,
+                "-m",
+                "scripts.backup_restore",
+                "restore",
+                backup,
+                "--destination",
+                ".gateway/restored/final-" + stamp,
+                "--verify-db",
+                "--report",
+                "evidence/recovery.json",
+            ],
+        ),
         ("browser", ["node", "tests/ui/portfolio_live.cjs"]),
         ("benchmark", [python, "-m", "scripts.benchmark_portfolio"]),
         (
@@ -104,6 +126,7 @@ def main():
         after, _ = fingerprint()
         receipt = {
             "executed_at": datetime.now(timezone.utc).isoformat(),
+            "application_version": "5.1.0",
             "source_sha256": before,
             "source_unchanged": after == before,
             "passed": success and after == before,
@@ -116,6 +139,9 @@ def main():
     if after != before:
         raise RuntimeError("Code changed during verification; receipt is invalid")
     print("Verified current code state:", before)
+    from scripts.summarize_evidence import main as summarize
+
+    summarize()
 
 
 if __name__ == "__main__":

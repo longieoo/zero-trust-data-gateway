@@ -68,6 +68,13 @@ class Database:
         )
 
     def query(self, plan):
+        return self._fetch(plan, 0, False)
+
+    def page(self, plan, after_id):
+        rows = self._fetch(plan, after_id, True)
+        return rows[: plan.limit], len(rows) > plan.limit
+
+    def _fetch(self, plan, after_id, lookahead):
         # Mask in SELECT, so raw protected fields never reach Python or response logs.
         fields = []
         for column in plan.columns:
@@ -76,7 +83,7 @@ class Database:
             else:
                 fields.append(sql.Identifier(column))
         query = sql.SQL(
-            "SELECT {} FROM {} WHERE tenant_id = %s AND {} ORDER BY id LIMIT %s"
+            "SELECT {} FROM {} WHERE tenant_id = %s AND {} AND id > %s ORDER BY id LIMIT %s"
         ).format(
             sql.SQL(", ").join(fields),
             sql.Identifier(TABLES[plan.resource]),
@@ -85,7 +92,7 @@ class Database:
         params = (
             [plan.tenant_id]
             + ([plan.row_scope.value] if plan.row_scope.kind == "department" else [])
-            + [plan.limit]
+            + [after_id, plan.limit + int(lookahead)]
         )
         with self.pool.connection() as connection:
             connection.execute("SET LOCAL statement_timeout = '3s'")

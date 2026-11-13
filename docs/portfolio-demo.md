@@ -8,7 +8,7 @@
 4. Analyst đọc financial: DENY, db_queried=false. Trình duyệt không có client certificate cũng bị chặn.
 5. Tải lịch sử và Replay: MATCH. Giải thích snapshot lịch sử, không gọi database để dựng lại rows.
 6. Dùng admin chạy impact cho candidate mask_admin=true, xem MASK_CHANGED. Kích hoạt với một chữ ký thất bại; ký bằng khóa thứ hai và kích hoạt thành công. Admin đọc lại thấy PII đã che.
-7. Rollback về revision trước. Dừng OPA trong script test: 503, db_queried=false; start OPA và đọc lại được. Chỉ dừng service thuộc project abac-portfolio.
+7. Rollback về revision trước. Dừng OPA trong script test: 503, db_queried=false; start OPA và đọc lại được. Chỉ dừng service thuộc Compose project đã cấu hình cho runtime này.
 8. Logout rồi dùng lại token: 401. Mở receipt, benchmark raw và giới hạn triển khai thay vì chỉ trình chiếu số test.
 
 ## Dùng trình duyệt trên máy đang có runtime
@@ -45,7 +45,7 @@ Rollback dùng cùng lệnh activate với revision cũ và expected là revisio
 ## Vận hành thường ngày
 
 ```powershell
-python -m scripts.portfolio doctor
+python -m scripts.portfolio doctor --live
 python -m scripts.portfolio status
 python -m scripts.validate_portfolio
 python -m scripts.benchmark_portfolio
@@ -58,11 +58,17 @@ Seed giữ 3 customer fixtures ban đầu và thêm 1.000 customer mỗi tenant.
 
 Các phiên bản account password, CA, signing keys và encryption key chỉ tồn tại trong runtime được loại khỏi ZIP. Không sao chép runtime cũ đè vào runtime v5. Với database của bản cũ, kiểm backup và schema trước; migration tenant gán dữ liệu cũ vào demo để bảo tồn, nhưng chỉ chạy sau khi đã xác nhận mapping phù hợp. Lệnh `portfolio migrate` chạy migrations idempotent trong project đã cấu hình.
 
+## Quy trình phê duyệt có thời hạn
+
+Đăng nhập `engineer` với chứng chỉ đã đăng ký, chọn production và đọc: nhận ACCESS_APPROVAL_REQUIRED. Gửi yêu cầu có mục đích cụ thể và thời hạn. Mở phiên trình duyệt khác với `data_owner` cùng tenant để phê duyệt. Engineer đọc lại thành công trong phạm vi policy; admin thu hồi hoặc chờ hết hạn, lần đọc tiếp theo bị chặn trước protected SELECT. Không duyệt được yêu cầu của chính mình hoặc tenant khác.
+
+Dùng `python -m scripts.validate_governance` để kiểm chứng cả expiry 60 giây, grant không vượt ABAC và cursor không dùng chéo phiên. Script cần khoảng hơn một phút và chỉ lưu metadata kiểm thử. Trên UI, chọn trang kế tiếp để duyệt từng trang đã lọc/che; đổi resource hoặc đăng nhập lại sẽ xóa cursor cũ.
+
 ## Backup và restore
 
-Phần đã kiểm chứng tự động là backup audit SQLite bằng backup API rồi mở lại và đối chiếu event. Các khóa mã hóa phải sao lưu ở kênh khác. Snapshot lịch sử chứa thuộc tính truy cập, dù không có business rows, vẫn là dữ liệu nhạy cảm.
+Thực hiện theo [runbook sao lưu và khôi phục](operations.md). CLI sao lưu PostgreSQL, trạng thái Gateway và cấu hình/khóa vào archive mã hóa; khóa giải mã giữ riêng. Tạm dừng proxy/Gateway trong cửa sổ bảo trì ngắn để có snapshot cục bộ nhất quán. Khôi phục vào thư mục mới, thử PostgreSQL trong container cô lập không mạng, đối chiếu nội dung và FORCE RLS; không ghi đè volume đang phục vụ.
 
-Chưa có quy trình disaster recovery đầy đủ cho PostgreSQL, CA và signed release store. Không coi việc copy một file SQLite là backup toàn bộ nền tảng. Muốn đưa lên môi trường thật cần thử khôi phục PostgreSQL từ backup sang môi trường cô lập, thử CA/key rotation, định nghĩa RPO/RTO, retention, quản lý secret và phản ứng khi audit đầy đĩa.
+Đây là kiểm chứng restore cục bộ, chưa phải chuyển traffic sang site DR, HA đa máy, CA/key rotation tự động hay cam kết RPO/RTO. Sau lỗi khi duyệt/thu hồi quyền, tải lại trạng thái vì commit workflow và response audit không thuộc một giao dịch chung.
 
 ## Điểm nên trình bày trong portfolio
 
@@ -80,6 +86,6 @@ Chưa có quy trình disaster recovery đầy đủ cho PostgreSQL, CA và signe
 | Data Platform | Trino OPA adapter + semantic parity corpus | Join/subquery/aggregation không bypass row/column policy |
 | Backend/Security | OIDC Authorization Code + PKCE | Issuer/audience/JWKS/rotation/outage, không mất cert binding/session revocation |
 | Platform/SRE | Audit outbox + telemetry + multi-replica | Sự cố queue/disk/replica, không mất audit, đo revoke trên nhiều node |
-| Governance | Access request, owner approval và expiry | Không tự duyệt, grant hết hạn bị chặn ở request kế tiếp |
+| Governance | OIDC identity + external resource owner registry | Ánh xạ tenant/role đúng và không làm mất cơ chế grant hiện có |
 
 Không cần thêm đồng thời tất cả công nghệ trên trước khi bắt đầu ứng tuyển. Bản hiện tại có một câu chuyện xuyên suốt và bằng chứng độc lập để trình bày.

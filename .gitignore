@@ -23,3 +23,6 @@ opa.sha256
 *.db
 .DS_Store
 Thumbs.db
+
+# Generated policy-matrix output; reproducible through pytest.
+tests/policy_matrix/results.json

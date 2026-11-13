@@ -46,6 +46,7 @@ services:
       GATEWAY_RELEASE_DIR: /runtime/releases
       GATEWAY_TRUST_FILE: /runtime/trusted-policy-keys.json
       GATEWAY_AUDIT_FILE: /state/audit.sqlite
+      GATEWAY_GRANT_REQUIRED: production
       GATEWAY_AUDIT_KEY: ${GATEWAY_AUDIT_KEY:?Run portfolio init first}
       DATABASE_URL: postgresql://gateway_reader:${GATEWAY_DB_PASSWORD}@postgres:5432/gateway_db
       SESSION_DATABASE_URL: postgresql://gateway_session:${GATEWAY_SESSION_DB_PASSWORD}@postgres:5432/gateway_db

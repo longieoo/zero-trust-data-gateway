@@ -1,3 +1,5 @@
+> Historical v4.0 → v5.0 comparison. Current implementation and results: [v5.1 upgrade](upgrade-v5-v5.1.md) and [current verification](portfolio-results.md).
+
 # BÁO CÁO NÂNG CẤP ZERO TRUST ABAC TỪ v4.0 LÊN v5.0
 
 **Ngày lập báo cáo:** 30/10/2026  
@@ -137,7 +139,7 @@ Các bất biến nổi bật đã được kiểm: không đọc chéo tenant; 
 
 ### 4.2. Hiệu năng
 
-Số liệu chính xác theo từng concurrency, thời gian JUnit và ngày chạy nằm trong [báo cáo kết quả hiện hành](portfolio-results.md). Dữ liệu gốc ở [benchmark summary](../evidence/benchmark.json) và [raw CSV](../evidence/benchmark-samples.csv).
+Số liệu chính xác theo từng concurrency, thời gian JUnit và ngày chạy nằm trong [báo cáo kết quả hiện hành](portfolio-results.md). Dữ liệu gốc ở [benchmark summary](../evidence/history/2026-10-23/benchmark.json) và [raw CSV](../evidence/history/2026-10-23/benchmark-samples.csv).
 
 Phép đo v5 gồm 300 mẫu đo và 30 warmup tách riêng, concurrency 1/5/10, HTTPS kiểm CA/hostname, mTLS, cap 100 dòng, RLS/masking, shared session và audit bật. P50/P95 dùng nearest rank; RPS tính trên elapsed của từng mức concurrency.
 
@@ -161,7 +163,7 @@ Giá trị portfolio nằm ở việc kết nối các ràng buộc an ninh vớ
 - [Kiến trúc và threat model](portfolio-architecture.md).
 - [Demo và vận hành](portfolio-demo.md).
 - [Kết quả thực nghiệm](portfolio-results.md).
-- [Receipt gắn fingerprint code](../evidence/verification-receipt.json).
+- [Receipt gắn fingerprint code](../evidence/history/2026-10-23/verification-receipt.json).
 - [JUnit XML](../evidence/pytest.xml).
 - [Live security/recovery](../evidence/live-validation.json).
 - [Browser checks](../evidence/browser.json).

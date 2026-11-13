@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "zero-trust-abac"
-version = "5.0.0"
+version = "5.1.0"
 description = "Tenant-isolated data gateway with signed policy releases and decision replay"
 requires-python = ">=3.12"
 dependencies = ["fastapi==0.161.1", "uvicorn==0.34.3", "httpx==0.28.1", "pydantic==2.11.5", "PyJWT==2.15.1", "cryptography==50.0.2", "psycopg[binary]==3.2.10", "psycopg-pool==3.2.6", "tzdata==2026.4"]

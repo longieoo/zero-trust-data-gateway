@@ -74,6 +74,96 @@ async function main() {
   releaseAudit(response({events:[{request_id:'old',route:'/api/v1/data/{resource}'}]}));
   await pendingAudit;
   assert.equal(timeline('audit-list').children.length,0,'late history must not return after logout');
-  console.log('4/4 delayed-response UI security checks passed');
+
+  let releaseCatalog;
+  const catalog = setup(async url => {
+    if (url === '/auth/login') return response({access_token:'fixture-token'});
+    if (url === '/auth/logout') return response({revoked:true});
+    return new Promise(resolve => {releaseCatalog=resolve;});
+  });
+  await catalog('login').handlers.submit({preventDefault(){}});
+  const pendingCatalog = catalog('load-catalog').handlers.click();
+  await catalog('logout').handlers.click();
+  releaseCatalog(response({resources:[{id:'customers',classification:'confidential'}]}));
+  await pendingCatalog;
+  assert.equal(catalog('catalog').children.length,0,'late catalog must remain cleared after logout');
+
+  let releaseAccess;
+  const access = setup(async url => {
+    if (url === '/auth/login') return response({access_token:'fixture-token',role:'admin'});
+    if (url === '/auth/logout') return response({revoked:true});
+    return new Promise(resolve => {releaseAccess=resolve;});
+  });
+  await access('login').handlers.submit({preventDefault(){}});
+  const pendingAccess = access('refresh-access').handlers.click();
+  await access('logout').handlers.click();
+  releaseAccess(response({requests:[{requester:'analyst',purpose:'secret test purpose',status:'PENDING'}]}));
+  await pendingAccess;
+  assert.equal(access('access-list').children.length,0,'late access purposes must remain cleared after logout');
+
+  let releaseChanged;
+  const changed = setup(async url => {
+    if (url === '/auth/login') return response({access_token:'fixture-token'});
+    return new Promise(resolve => {releaseChanged=resolve;});
+  });
+  await changed('login').handlers.submit({preventDefault(){}});
+  const pendingChanged = changed('read').handlers.click();
+  changed('resource').value='financial';
+  changed('resource').handlers.change();
+  releaseChanged(response({data:[{id:1}],obligations:{columns:['id']},pagination:{next_cursor:'stale'}}));
+  await pendingChanged;
+  assert.equal(changed('data').children.length,0,'changing resource cancels the previous protected read');
+  assert.equal(changed('next-page').disabled,true,'cancelled response cannot restore its cursor');
+
+  const urls=[];
+  const pages=setup(async url => {
+    if (url === '/auth/login') return response({access_token:'fixture-token'});
+    urls.push(url);
+    return response({data:[{id:urls.length}],obligations:{columns:['id']},
+      pagination:{next_cursor:urls.length===1?'opaque+/cursor':null}});
+  });
+  pages('resource').value='customers'; pages('page-size').value='25';
+  await pages('login').handlers.submit({preventDefault(){}});
+  await pages('read').handlers.click();
+  assert.equal(pages('next-page').disabled,false);
+  await pages('next-page').handlers.click();
+  assert.equal(urls[1],'/api/v1/data/customers?page_size=25&cursor=opaque%2B%2Fcursor');
+  assert(pages('page-info').textContent.includes('Trang 2'));
+  assert.equal(pages('next-page').disabled,true,'last page disables continuation');
+  pages('page-size').value='50'; pages('page-size').handlers.change();
+  await pages('next-page').handlers.click();
+  assert.equal(urls.length,2,'reset cursor cannot send a stale continuation');
+  assert.equal(pages('data').children.length,0);
+
+  const payloads=[];
+  const unsafePurpose='<img src=x onerror=alert(1)> review';
+  const workflow=setup(async (url, options) => {
+    if (url === '/auth/login') return response({access_token:'fixture-token',role:'admin',tenant_id:'demo'});
+    if (options?.method === 'POST') {
+      payloads.push({url,body:options.body&&JSON.parse(options.body)});
+      return response({request_id:'request-1',status:options.body?'PENDING':'APPROVED'});
+    }
+    return response({tenant_id:'demo',requests:[{request_id:'request-1',requester:'analyst',resource:'production',purpose:unsafePurpose,status:'PENDING'}]});
+  });
+  workflow('username').value='data_owner';
+  await workflow('login').handlers.submit({preventDefault(){}});
+  workflow('access-resource').value='production';workflow('purpose').value=unsafePurpose;workflow('duration').value='900';
+  await workflow('access-form').handlers.submit({preventDefault(){}});
+  assert.deepEqual(payloads[0].body,{resource:'production',purpose:unsafePurpose,duration_seconds:900},'identity and tenant never come from the browser form');
+  const requestRow=workflow('access-list').children[0].children[1];
+  assert.equal(requestRow.children[2].textContent,unsafePurpose,'untrusted purpose is rendered as literal text');
+  assert.equal(requestRow.children[5].children[0].textContent,'Phê duyệt');
+  await requestRow.children[5].children[0].handlers.click();
+  assert.equal(payloads[1].url,'/api/v1/access-requests/request-1/approve');
+
+  const self=setup(async url => url==='/auth/login'
+    ? response({access_token:'fixture-token',role:'admin'})
+    : response({tenant_id:'demo',requests:[{request_id:'own',requester:'data_owner',resource:'production',purpose:'Own reviewed request',status:'PENDING'}]}));
+  self('username').value='data_owner';
+  await self('login').handlers.submit({preventDefault(){}});
+  await self('refresh-access').handlers.click();
+  const buttons=self('access-list').children[0].children[1].children[5].children;
+  assert.deepEqual(buttons.map(button=>button.textContent),['Thu hồi'],'own pending request offers no self-approval action');
+  console.log('10/10 UI security and governance checks passed');
 }
 main().catch(error => { console.error(error.message); process.exitCode = 1; });

@@ -1,0 +1,357 @@
+{
+  "executed_at": "2026-11-13T13:38:51.864633+00:00",
+  "target": "CA-verified HTTPS local demo Gateway",
+  "elapsed_seconds": 63.14823040000192,
+  "complete": true,
+  "passed": 22,
+  "checks": [
+    {
+      "name": "production read requires approval before SELECT",
+      "pass": true,
+      "evidence": {
+        "http": 403,
+        "request_id": "cca885b5-bc27-4e28-8f06-7330534cf9b0",
+        "decision": "DENY",
+        "reason_code": "ACCESS_APPROVAL_REQUIRED",
+        "db_queried": false,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "access request accepted for verified identity",
+      "pass": true,
+      "evidence": {
+        "http": 201,
+        "request_id": "dc326884-be12-4ab8-8337-3295a6db8a3b",
+        "decision": null,
+        "reason_code": null,
+        "db_queried": null,
+        "status": "PENDING",
+        "tenant_id": "demo",
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "requester cannot approve a request",
+      "pass": true,
+      "evidence": {
+        "http": 403,
+        "request_id": "49ff2ccd-663a-4c1e-bbc8-a2b8ad8a000a",
+        "decision": "DENY",
+        "reason_code": "UNTRUSTED_CONTEXT",
+        "db_queried": false,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "other tenant admin cannot approve request",
+      "pass": true,
+      "evidence": {
+        "http": 404,
+        "request_id": "892085aa-ecbf-4e07-9c17-70e921b78547",
+        "decision": "DENY",
+        "reason_code": "UNKNOWN_RESOURCE",
+        "db_queried": false,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "access request accepted for verified identity",
+      "pass": true,
+      "evidence": {
+        "http": 201,
+        "request_id": "26122257-b36d-414a-aaa0-3b10c9c2ae14",
+        "decision": null,
+        "reason_code": null,
+        "db_queried": null,
+        "status": "PENDING",
+        "tenant_id": "demo",
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "admin cannot self approve",
+      "pass": true,
+      "evidence": {
+        "http": 403,
+        "request_id": "47fb3879-c2e7-4402-be83-b197581324a8",
+        "decision": "DENY",
+        "reason_code": "UNTRUSTED_CONTEXT",
+        "db_queried": false,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "independent tenant owner approves",
+      "pass": true,
+      "evidence": {
+        "http": 200,
+        "request_id": "dc326884-be12-4ab8-8337-3295a6db8a3b",
+        "decision": null,
+        "reason_code": null,
+        "db_queried": null,
+        "status": "APPROVED",
+        "tenant_id": "demo",
+        "expires_at": "2026-11-13T13:52:49+00:00",
+        "approved_at": "2026-11-13T13:37:49+00:00",
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "approved engineer reads production under normal ABAC",
+      "pass": true,
+      "evidence": {
+        "http": 200,
+        "request_id": "ea5942cc-87f5-4872-828d-fa08a1e3b51e",
+        "decision": "ALLOW",
+        "reason_code": "ROLE_PERMISSION",
+        "db_queried": true,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "owner revokes grant",
+      "pass": true,
+      "evidence": {
+        "http": 200,
+        "request_id": "dc326884-be12-4ab8-8337-3295a6db8a3b",
+        "decision": null,
+        "reason_code": null,
+        "db_queried": null,
+        "status": "REVOKED",
+        "tenant_id": "demo",
+        "expires_at": "2026-11-13T13:52:49+00:00",
+        "approved_at": "2026-11-13T13:37:49+00:00",
+        "revoked_at": "2026-11-13T13:37:49+00:00"
+      }
+    },
+    {
+      "name": "revoked grant denies next protected SELECT",
+      "pass": true,
+      "evidence": {
+        "http": 403,
+        "request_id": "f529f661-ae3a-45d4-83a8-3263db0da003",
+        "decision": "DENY",
+        "reason_code": "ACCESS_APPROVAL_REQUIRED",
+        "db_queried": false,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "access request accepted for verified identity",
+      "pass": true,
+      "evidence": {
+        "http": 201,
+        "request_id": "d0a41abe-9c1a-42dd-8d19-f4b6865a00f3",
+        "decision": null,
+        "reason_code": null,
+        "db_queried": null,
+        "status": "PENDING",
+        "tenant_id": "demo",
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "independent owner approves financial workflow record",
+      "pass": true,
+      "evidence": {
+        "http": 200,
+        "request_id": "d0a41abe-9c1a-42dd-8d19-f4b6865a00f3",
+        "decision": null,
+        "reason_code": null,
+        "db_queried": null,
+        "status": "APPROVED",
+        "tenant_id": "demo",
+        "expires_at": "2026-11-13T13:52:49+00:00",
+        "approved_at": "2026-11-13T13:37:49+00:00",
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "approved workflow cannot bypass an ABAC deny",
+      "pass": true,
+      "evidence": {
+        "http": 403,
+        "request_id": "dd014514-eb14-4f60-af19-c450c2bfafef",
+        "decision": "DENY",
+        "reason_code": "INSUFFICIENT_CLEARANCE",
+        "db_queried": false,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "access request accepted for verified identity",
+      "pass": true,
+      "evidence": {
+        "http": 201,
+        "request_id": "f4cfb0e5-10f2-49dc-8415-669880ca6a40",
+        "decision": null,
+        "reason_code": null,
+        "db_queried": null,
+        "status": "PENDING",
+        "tenant_id": "demo",
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "short lived grant accepted",
+      "pass": true,
+      "evidence": {
+        "http": 200,
+        "request_id": "f4cfb0e5-10f2-49dc-8415-669880ca6a40",
+        "decision": null,
+        "reason_code": null,
+        "db_queried": null,
+        "status": "APPROVED",
+        "tenant_id": "demo",
+        "expires_at": "2026-11-13T13:38:49+00:00",
+        "approved_at": "2026-11-13T13:37:49+00:00",
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "analyst first page enforces SQL masking and department",
+      "pass": true,
+      "evidence": {
+        "http": 200,
+        "request_id": "22e13130-4f3b-4e16-b2e3-8cacd364a7ca",
+        "decision": "ALLOW",
+        "reason_code": "ROLE_PERMISSION",
+        "db_queried": true,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null,
+        "rows": 25
+      }
+    },
+    {
+      "name": "first page provides continuation",
+      "pass": true,
+      "evidence": {
+        "has_more": true
+      }
+    },
+    {
+      "name": "second page has disjoint authorized rows",
+      "pass": true,
+      "evidence": {
+        "http": 200,
+        "request_id": "0097c8c1-76ba-41b1-8faf-11afc4773f8f",
+        "decision": "ALLOW",
+        "reason_code": "ROLE_PERMISSION",
+        "db_queried": true,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null,
+        "rows": 25,
+        "disjoint": true
+      }
+    },
+    {
+      "name": "tampered cursor rejected before SELECT",
+      "pass": true,
+      "evidence": {
+        "http": 422,
+        "request_id": "9838a015-0f73-41d5-8697-f42107ab66f9",
+        "decision": "DENY",
+        "reason_code": "INVALID_CURSOR",
+        "db_queried": false,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "cursor cannot move to another identity or session",
+      "pass": true,
+      "evidence": {
+        "http": 422,
+        "request_id": "61bfc52f-b898-4ead-8f1a-696c8485da56",
+        "decision": "DENY",
+        "reason_code": "INVALID_CURSOR",
+        "db_queried": false,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "cursor cannot move to another tenant",
+      "pass": true,
+      "evidence": {
+        "http": 422,
+        "request_id": "7efaee86-6f58-43a1-aa46-740a67bef881",
+        "decision": "DENY",
+        "reason_code": "INVALID_CURSOR",
+        "db_queried": false,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null
+      }
+    },
+    {
+      "name": "real expiry denies next request before SELECT",
+      "pass": true,
+      "evidence": {
+        "http": 403,
+        "request_id": "e74153d6-278d-4e61-ba62-231c0bd33478",
+        "decision": "DENY",
+        "reason_code": "ACCESS_APPROVAL_REQUIRED",
+        "db_queried": false,
+        "status": null,
+        "tenant_id": null,
+        "expires_at": null,
+        "approved_at": null,
+        "revoked_at": null,
+        "checked_at": "2026-11-13T13:38:51.713572+00:00",
+        "grant_expires_at": "2026-11-13T13:38:49+00:00"
+      }
+    }
+  ]
+}

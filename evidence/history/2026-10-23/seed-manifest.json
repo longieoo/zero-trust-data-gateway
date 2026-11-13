@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-10-23T13:32:49.892705+00:00",
+  "source": "deterministic_synthetic_v1",
+  "rows_per_tenant": 1000,
+  "contract_version": 1,
+  "pii_columns": [
+    "salary",
+    "email",
+    "national_id"
+  ],
+  "sql_sha256": "8c15ba49a4c6aa23cb8d2124b63164ab80fc83d16f169be769886c1fed2d4d34",
+  "quality": {
+    "counts": [
+      {
+        "tenant_id": "beta",
+        "department": "marketing",
+        "rows": 667
+      },
+      {
+        "tenant_id": "beta",
+        "department": "risk",
+        "rows": 333
+      },
+      {
+        "tenant_id": "demo",
+        "department": "marketing",
+        "rows": 669
+      },
+      {
+        "tenant_id": "demo",
+        "department": "risk",
+        "rows": 334
+      }
+    ],
+    "synthetic_rows": 2000,
+    "invalid_rows": 0,
+    "fingerprint": "ef02810098f5d43778f85dab5df2e81e"
+  }
+}

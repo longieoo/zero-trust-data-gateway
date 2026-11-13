@@ -14,6 +14,7 @@ from pathlib import Path
 from uuid import uuid4
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+from cryptography.exceptions import InvalidSignature
 
 from app.jsonio import strict_json_loads
 from app.policy_repository import validate_policies
@@ -23,7 +24,9 @@ DEFAULT_VIEW = {"mask_admin": False, "limit": 100}
 
 
 def canonical(value):
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+    return json.dumps(
+        value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False
+    ).encode()
 
 
 def digest(value):
@@ -44,7 +47,13 @@ def engine_revision():
 
 
 def validate_payload(payload):
-    if set(payload) != {"schema", "engine_revision", "policies", "view", "description"}:
+    if not isinstance(payload, dict) or set(payload) != {
+        "schema",
+        "engine_revision",
+        "policies",
+        "view",
+        "description",
+    }:
         raise ValueError("Invalid release fields")
     if type(payload["schema"]) is not int or payload["schema"] != 1:
         raise ValueError("Unsupported release schema")
@@ -56,7 +65,11 @@ def validate_payload(payload):
     if not 1 <= len(payload["policies"]) <= 5000:
         raise ValueError("Policy capacity exceeded")
     view = payload["view"]
-    if set(view) != {"mask_admin", "limit"} or type(view["mask_admin"]) is not bool:
+    if (
+        not isinstance(view, dict)
+        or set(view) != {"mask_admin", "limit"}
+        or type(view["mask_admin"]) is not bool
+    ):
         raise ValueError("Invalid view profile")
     if type(view["limit"]) is not int or not 1 <= view["limit"] <= 100:
         raise ValueError("Invalid row limit")
@@ -85,18 +98,29 @@ def sign_release(release, key_id, private_key):
 
 
 def verify_release(release, trusted_keys, required=2):
-    if set(release) != {"revision", "payload", "signatures"}:
+    if type(required) is not int or required not in (1, 2):
+        raise ValueError("Supported approval quorum is one or two distinct keys")
+    if not isinstance(release, dict) or set(release) != {"revision", "payload", "signatures"}:
         raise ValueError("Invalid release envelope")
+    if not isinstance(release["signatures"], dict) or not isinstance(trusted_keys, dict):
+        raise ValueError("Invalid signature or trust-key mapping")
+    if len(release["signatures"]) > 32:
+        raise ValueError("Too many release signatures")
     validate_payload(release["payload"])
     if release["revision"] != digest(release["payload"]):
         raise ValueError("Revision mismatch")
     # Count distinct public keys, not names: aliasing a key must not permit self-approval.
     verified = set()
     for key_id, signature in release["signatures"].items():
-        public = base64.b64decode(trusted_keys[key_id], validate=True)
-        Ed25519PublicKey.from_public_bytes(public).verify(
-            base64.b64decode(signature, validate=True), canonical(release["payload"])
-        )
+        try:
+            if not isinstance(key_id, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", key_id):
+                raise ValueError("Invalid signer identifier")
+            public = base64.b64decode(trusted_keys[key_id], validate=True)
+            Ed25519PublicKey.from_public_bytes(public).verify(
+                base64.b64decode(signature, validate=True), canonical(release["payload"])
+            )
+        except (KeyError, TypeError, ValueError, InvalidSignature) as exc:
+            raise ValueError("Release contains an invalid or untrusted signature") from exc
         verified.add(public)
     if len(verified) < required:
         raise ValueError("Two independent authorized signatures required")
@@ -135,9 +159,13 @@ class ReleaseRepository:
         if not re.fullmatch(r"[0-9a-f]{64}", revision):
             raise ValueError("Invalid revision")
         path = self.directory / (revision + ".json")
-        if path.stat().st_size > 8_000_000:
+        # Bound the read itself rather than stat-then-read, which can race a
+        # replacement from the operator-controlled release directory.
+        with path.open("rb") as handle:
+            content = handle.read(8_000_001)
+        if len(content) > 8_000_000:
             raise ValueError("Oversized policy release")
-        release = strict_json_loads(path.read_text(encoding="utf-8"))
+        release = strict_json_loads(content.decode("utf-8"))
         if release["revision"] != revision:
             raise ValueError("Release path mismatch")
         trust = strict_json_loads(self.trust_file.read_text(encoding="utf-8"))

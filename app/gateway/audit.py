@@ -34,6 +34,9 @@ class AuditStore:
                 actor TEXT, recorded_at TEXT NOT NULL, metadata TEXT NOT NULL,
                 snapshot TEXT, UNIQUE(request_id, phase))""")
             db.execute("CREATE INDEX IF NOT EXISTS audit_tenant ON audit(tenant, sequence)")
+            db.execute(
+                "CREATE TABLE IF NOT EXISTS audit_health (id INTEGER PRIMARY KEY, probe INTEGER)"
+            )
 
     @contextmanager
     def connect(self):
@@ -47,15 +50,24 @@ class AuditStore:
             db.close()
 
     def append(self, request_id, phase, metadata, snapshot=None, tenant=None, subject=None):
+        if not isinstance(request_id, str) or not 1 <= len(request_id) <= 128:
+            raise ValueError("Invalid audit request identifier")
+        if phase not in {"received", "intent", "response"} or not isinstance(metadata, dict):
+            raise ValueError("Invalid audit event contract")
+        if snapshot is not None and phase != "intent":
+            raise ValueError("Replay snapshots belong to intent events")
         encoded = canonical(metadata).decode()
+        if len(encoded.encode()) > 64_000:
+            raise ValueError("Oversized audit metadata")
         actor = actor_hash(subject) if subject else None
         aad = canonical([request_id, phase, tenant, actor, metadata])
         sealed = None
         if snapshot is not None:
+            plaintext = canonical(snapshot)
+            if len(plaintext) > 8_000_000:
+                raise ValueError("Oversized replay snapshot")
             nonce = os.urandom(12)
-            sealed = base64.b64encode(
-                nonce + self.cipher.encrypt(nonce, canonical(snapshot), aad)
-            ).decode()
+            sealed = base64.b64encode(nonce + self.cipher.encrypt(nonce, plaintext, aad)).decode()
         with self.connect() as db:
             db.execute(
                 "INSERT INTO audit(request_id,phase,tenant,actor,recorded_at,metadata,snapshot) "
@@ -72,6 +84,10 @@ class AuditStore:
             )
 
     def list(self, tenant, subject=None, before=2**63 - 1, limit=50):
+        if type(limit) is not int or not 1 <= limit <= 100:
+            raise ValueError("Audit page size must be 1..100")
+        if type(before) is not int or not 1 <= before <= 2**63 - 1:
+            raise ValueError("Invalid audit cursor")
         actor = actor_hash(subject) if subject else None
         with self.connect() as db:
             rows = db.execute(
@@ -97,7 +113,11 @@ class AuditStore:
             ).fetchone()
         if row is None or row["snapshot"] is None:
             return None
-        raw = base64.b64decode(row["snapshot"])
+        if len(row["snapshot"]) > 11_000_000:
+            raise ValueError("Oversized stored snapshot")
+        raw = base64.b64decode(row["snapshot"], validate=True)
+        if len(raw) < 28:
+            raise ValueError("Invalid stored snapshot")
         aad = canonical(
             [request_id, row["phase"], tenant, row["actor"], json.loads(row["metadata"])]
         )
@@ -108,5 +128,16 @@ class AuditStore:
             source.backup(target)
 
     def ready(self):
-        with self.connect() as db:
-            return db.execute("PRAGMA quick_check").fetchone()[0] == "ok"
+        # A readable SQLite file may still be unwritable (permissions, a full
+        # volume, or another writer holding a lock). Exercise the actual write
+        # path without leaving fake security events in the audit timeline.
+        try:
+            with self.connect() as db:
+                if db.execute("PRAGMA quick_check").fetchone()[0] != "ok":
+                    return False
+                db.execute("BEGIN IMMEDIATE")
+                db.execute("INSERT OR REPLACE INTO audit_health VALUES (1, 1)")
+                db.rollback()
+                return True
+        except sqlite3.Error:
+            return False
