@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-11-13T13:52:40.951Z",
+  "executed_at": "2026-11-13T14:02:21.010Z",
   "browser": "Playwright Chromium",
   "certificate_note": "Browser ignores locally generated server CA errors; client certificate is real. Python E2E verifies server CA.",
   "checks": [

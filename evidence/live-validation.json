@@ -1,7 +1,7 @@
 {
-  "executed_at": "2026-11-13T13:51:16.645802+00:00",
+  "executed_at": "2026-11-13T14:00:58.299556+00:00",
   "target": "local abac-complete",
-  "elapsed_seconds": 4.326885599999514,
+  "elapsed_seconds": 4.238126500000362,
   "passed": 32,
   "checks": [
     {
@@ -54,7 +54,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "65ba13c5-8733-4cb8-ade5-8535716faf93",
+        "request_id": "60125aec-cff6-4af5-9952-01618847c97a",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -91,7 +91,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "b9281538-3f62-49f2-a6cb-b60eb34cd8a0",
+        "request_id": "e3e11e59-7884-4cf3-a909-3226e7b6e1bf",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -124,7 +124,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "dd450a8e-421b-421c-a82c-b0a87bf96bcd",
+        "request_id": "9d979162-0983-497e-a069-b94b669140f5",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -157,7 +157,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "263daa60-c955-4db7-983b-39ed4f25cb7e",
+        "request_id": "749c2849-c357-43b7-bb5a-83d5815e1166",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -194,7 +194,7 @@
       "pass": true,
       "evidence": {
         "http": 403,
-        "request_id": "56d244d9-9c3b-4391-8a7d-d9e6b891bf2b",
+        "request_id": "c4b6c4c5-2c96-4707-ad44-2b42d12ef9ab",
         "decision": "DENY",
         "reason_code": "UNTRUSTED_DEVICE",
         "db_queried": false,
@@ -208,7 +208,7 @@
       "pass": true,
       "evidence": {
         "http": 401,
-        "request_id": "ae735b96-ce3d-442d-9e03-2309543d0be5",
+        "request_id": "2ab62a81-4f01-4e89-9f86-cd72d5547a0b",
         "decision": "DENY",
         "reason_code": "AUTHENTICATION_FAILED",
         "db_queried": false,
@@ -222,7 +222,7 @@
       "pass": true,
       "evidence": {
         "http": 403,
-        "request_id": "02c5dc1f-af61-4fe8-a06f-90e102bafa40",
+        "request_id": "710746b9-c1af-44fa-badd-a7abf656db52",
         "decision": "DENY",
         "reason_code": "INSUFFICIENT_CLEARANCE",
         "db_queried": false,
@@ -298,7 +298,7 @@
             "limit": 100
           }
         },
-        "evaluated_at": "2026-11-13T13:51:13.504106+00:00",
+        "evaluated_at": "2026-11-13T14:00:55.251095+00:00",
         "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
         "scope": "decision_only_no_historical_rows",
         "db_queried": false
@@ -328,7 +328,7 @@
         "tenant_id": "demo",
         "records": [
           {
-            "request_id": "02c5dc1f-af61-4fe8-a06f-90e102bafa40",
+            "request_id": "710746b9-c1af-44fa-badd-a7abf656db52",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -353,7 +353,7 @@
             }
           },
           {
-            "request_id": "56d244d9-9c3b-4391-8a7d-d9e6b891bf2b",
+            "request_id": "c4b6c4c5-2c96-4707-ad44-2b42d12ef9ab",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -376,7 +376,7 @@
             }
           },
           {
-            "request_id": "263daa60-c955-4db7-983b-39ed4f25cb7e",
+            "request_id": "749c2849-c357-43b7-bb5a-83d5815e1166",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -445,7 +445,7 @@
             }
           },
           {
-            "request_id": "b9281538-3f62-49f2-a6cb-b60eb34cd8a0",
+            "request_id": "e3e11e59-7884-4cf3-a909-3226e7b6e1bf",
             "status": "COMPARED",
             "changes": [
               "MASK_CHANGED"
@@ -510,7 +510,7 @@
             }
           },
           {
-            "request_id": "65ba13c5-8733-4cb8-ade5-8535716faf93",
+            "request_id": "60125aec-cff6-4af5-9952-01618847c97a",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -579,7 +579,7 @@
             }
           },
           {
-            "request_id": "a01ab5d6-810a-4d52-823f-c18e9a7fbbea",
+            "request_id": "07dcf336-27be-42c8-a5d5-2d1197540516",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -648,7 +648,7 @@
             }
           },
           {
-            "request_id": "26b240da-b23f-4963-8f3f-4f57e2f0725e",
+            "request_id": "fe138690-0874-4fec-8349-dab231fc5e1b",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -717,7 +717,7 @@
             }
           },
           {
-            "request_id": "7c42e150-026d-4b9d-a1cc-014e50790515",
+            "request_id": "a4dd874b-395d-48e7-a66f-9067ba7b0fad",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -786,7 +786,7 @@
             }
           },
           {
-            "request_id": "6025a04d-dc1b-4699-9b44-fe746d0a2a59",
+            "request_id": "7944e0d6-ef23-44d0-ac91-8c4dba503bcf",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -855,7 +855,7 @@
             }
           },
           {
-            "request_id": "702f08c7-3de3-438c-8879-13ed944933ac",
+            "request_id": "1074744a-2148-4acb-b022-a8ff5f183dd3",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -924,7 +924,7 @@
             }
           },
           {
-            "request_id": "dcebe470-923d-445c-b7e3-831b2e721a09",
+            "request_id": "248b0177-19be-4a43-bbdf-170990457606",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -993,7 +993,7 @@
             }
           },
           {
-            "request_id": "e2b1f506-44c7-41bf-9d6a-099b12e6fadd",
+            "request_id": "3982a704-b500-4216-9c99-55b69eec79b5",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1062,7 +1062,7 @@
             }
           },
           {
-            "request_id": "fbbf6910-b290-461a-8cc9-626ecda3fb76",
+            "request_id": "eeaf486b-f299-4f65-acad-b8bd472c95c3",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1131,7 +1131,7 @@
             }
           },
           {
-            "request_id": "504ef068-3860-4f97-b4d5-e0e2a1b2c9bc",
+            "request_id": "94a2db9d-a52b-4965-a730-bb5a6a6308c7",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1200,7 +1200,7 @@
             }
           },
           {
-            "request_id": "a5e8f9b6-674c-47b8-95bd-32918c44c93a",
+            "request_id": "63306b02-ab5f-4a30-9159-2de472763c31",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1269,7 +1269,7 @@
             }
           },
           {
-            "request_id": "69070380-ddd6-490f-9d95-d276f5052249",
+            "request_id": "471d49ab-6061-4c0e-b33c-542ceb318c60",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1338,7 +1338,7 @@
             }
           },
           {
-            "request_id": "c558f026-6917-4c33-b0cd-0af4b262b580",
+            "request_id": "414ee493-e21f-4ae4-9615-8c46e196778c",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1407,7 +1407,7 @@
             }
           },
           {
-            "request_id": "b11d73b8-98c8-4658-8977-0f6ea1a336e6",
+            "request_id": "6624e988-b996-4759-b04b-4b90e2c71784",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1476,7 +1476,7 @@
             }
           },
           {
-            "request_id": "c674f5d1-d0c2-4999-b429-ede6ec80cf24",
+            "request_id": "a97a6e11-869b-4b87-b5f7-6cf3dc656e91",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1545,7 +1545,7 @@
             }
           },
           {
-            "request_id": "c83eef97-748f-46a6-a81b-80b8c6ebbe9d",
+            "request_id": "7120afa0-b200-46c8-a592-5239d729ccce",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1614,7 +1614,7 @@
             }
           },
           {
-            "request_id": "54dbbb90-a30e-45dc-b3ad-46c9342d19f2",
+            "request_id": "4de9a720-aa68-48e2-81b6-1cb0fa63bc4e",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1683,7 +1683,7 @@
             }
           },
           {
-            "request_id": "dd16ba85-ebe5-414c-b5a6-7f95b94bc397",
+            "request_id": "2ea49e41-2e7b-4e01-9e6c-b027c0ee7a52",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1752,7 +1752,7 @@
             }
           },
           {
-            "request_id": "67d42c26-338b-4d09-802d-f0f8c1bef9e0",
+            "request_id": "dd8f9209-70d6-4466-97eb-45657e539cc4",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1821,7 +1821,7 @@
             }
           },
           {
-            "request_id": "2982d19b-7694-4169-b1c1-d27e538c28a9",
+            "request_id": "dae05328-9d5e-406c-a9e9-34e9c593b319",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1890,7 +1890,7 @@
             }
           },
           {
-            "request_id": "833d1711-313d-4571-a5bc-dbdaadc92136",
+            "request_id": "23e9cf73-b70a-4e71-bc62-9aad8357278b",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1959,7 +1959,7 @@
             }
           },
           {
-            "request_id": "cccaba9a-4352-4f26-827e-8f5679433e2b",
+            "request_id": "c4b475b3-e863-497b-aca0-ecfe5eb55d35",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -2028,7 +2028,7 @@
             }
           },
           {
-            "request_id": "08f0b5bf-67dc-460b-a293-5cd04cc42688",
+            "request_id": "d62a9608-3190-489b-be39-b29ee0e1f6a9",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -2097,7 +2097,7 @@
             }
           },
           {
-            "request_id": "ceacb4e1-98dd-404f-b191-f3209609eac7",
+            "request_id": "2245a0b5-9c68-4c6e-9c21-041d2250450e",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -2166,7 +2166,7 @@
             }
           },
           {
-            "request_id": "18c79542-aae3-4a4a-a810-5a7e8a819313",
+            "request_id": "e7562efb-78e5-41bb-9866-51dd3228b5d2",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -2235,7 +2235,7 @@
             }
           },
           {
-            "request_id": "c07367a7-abf7-4ef2-a38a-6076de669c67",
+            "request_id": "6ed1aeb6-95d5-4b45-9626-6ee21bce4704",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -2325,7 +2325,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "2c0a6efa-ddef-4032-b1bd-bb86552d3d77",
+        "request_id": "7a53b218-afc4-42c2-9d4b-862357f6f9cf",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -2362,7 +2362,7 @@
       "pass": true,
       "evidence": {
         "http": 503,
-        "request_id": "7e76a62e-5dd6-4068-a1a0-71db04688156",
+        "request_id": "d46e06be-9ced-458d-b8a3-93a1ccac7c0a",
         "decision": "DENY",
         "reason_code": "INVALID_POLICY",
         "db_queried": false,
@@ -2376,7 +2376,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "5e4b9746-315b-479d-8d73-418560ded018",
+        "request_id": "3bd103a6-753f-4680-8ee4-28f77e6529eb",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -2409,7 +2409,7 @@
       "pass": true,
       "evidence": {
         "http": 503,
-        "request_id": "88e0547e-3ac9-4099-a321-8c67fa0e345e",
+        "request_id": "26dce99c-f6f2-432d-9a8f-d9f431a51346",
         "decision": "DENY",
         "reason_code": "OPA_UNAVAILABLE",
         "db_queried": false,
@@ -2423,7 +2423,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "5d9213f8-132a-45ff-b79c-e2e480f1006b",
+        "request_id": "8fa1ee58-5aff-46ad-ac1b-9af8be32e8ae",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -2467,7 +2467,7 @@
       "pass": true,
       "evidence": {
         "http": 401,
-        "request_id": "a5baba20-36a8-46a7-80a2-05fd7b79ac2f",
+        "request_id": "6c4a2492-0a3c-4a09-a35c-392e302ab5ef",
         "decision": "DENY",
         "reason_code": "AUTHENTICATION_FAILED",
         "db_queried": false,
@@ -2570,7 +2570,7 @@
       "name": "two independent session clients observe revocation",
       "pass": true,
       "evidence": {
-        "revoke_and_read_ms": 4.781927000294672,
+        "revoke_and_read_ms": 3.5335299999132985,
         "scope": "two_store_instances_not_two_gateway_replicas"
       }
     },

@@ -9,6 +9,23 @@ from scripts.benchmark_portfolio import percentile
 from scripts.verify_release import ROOT, fingerprint
 
 
+def junit_summary(suite):
+    if suite is None or any(int(suite.get(key, "0")) for key in ("errors", "failures")):
+        raise ValueError("Python suite has failures or errors")
+    skipped = [case for case in suite.findall("testcase") if case.find("skipped") is not None]
+    for case in skipped:
+        if (
+            case.get("classname") != "tests.unit.test_releases"
+            or case.get("name") != "test_atomic_replace_retries_transient_windows_sharing_violation"
+            or case.find("skipped").get("message") != "Windows file sharing semantics"
+        ):
+            raise ValueError("Unexpected skipped Python test")
+    total = int(suite.get("tests", "0"))
+    if total < 1 or len(skipped) > 1 or int(suite.get("skipped", "0")) != len(skipped):
+        raise ValueError("Invalid JUnit counts")
+    return {"passed": total - len(skipped), "skipped": len(skipped)}
+
+
 def main():
     evidence = ROOT / "evidence"
 
@@ -37,8 +54,7 @@ def main():
     if set(steps) != required or any(row["returncode"] for row in steps.values()):
         raise ValueError("Incomplete final gate")
     suite = ElementTree.parse(evidence / "pytest.xml").getroot().find("testsuite")
-    if suite is None or any(int(suite.get(key, "0")) for key in ("errors", "failures", "skipped")):
-        raise ValueError("Python suite is not a complete pass")
+    python_result = junit_summary(suite)
     live, governance, browser = (
         read(name) for name in ("live-validation.json", "governance.json", "browser.json")
     )
@@ -87,7 +103,7 @@ Tạo từ lượt final gate kết thúc ngày **{date}**. Đây là thực thi
 
 | Nhóm | Kết quả thực thi | Minh chứng |
 |---|---|---|
-| Python với OPA thật | {suite.get("tests")} passed, 0 failed/error/skipped; {float(suite.get("time")):.3f} giây | [JUnit](../evidence/pytest.xml) |
+| Python với OPA thật | {python_result["passed"]} passed, 0 failed/error, {python_result["skipped"]} platform skip; {float(suite.get("time")):.3f} giây | [JUnit](../evidence/pytest.xml) |
 | Docker, mTLS, RLS, policy/recovery | {len(live["checks"])}/{len(live["checks"])} PASS | [Live JSON](../evidence/live-validation.json) |
 | Phê duyệt, expiry và pagination | {len(governance["checks"])}/{len(governance["checks"])} PASS | [Governance JSON](../evidence/governance.json) |
 | Trình duyệt thật | {len(browser["checks"])}/{len(browser["checks"])} PASS; {browser["browser"]} | [Browser JSON](../evidence/browser.json) |
@@ -97,6 +113,8 @@ Tạo từ lượt final gate kết thúc ngày **{date}**. Đây là thực thi
 | Source trong lượt gate | Không đổi; mọi bước exit 0 | [Receipt](../evidence/verification-receipt.json) |
 
 Source/config SHA-256: `{receipt["source_sha256"]}`. Receipt bao phủ code/config/test, không bao phủ mọi tài liệu hoặc chứng minh nguồn chưa bị administrator thay. Log đầy đủ lưu cục bộ và trong CI artifact; các file log không được đưa vào source package.
+
+Chỉ ca kiểm tra Windows file-sharing được phép SKIP trên Linux. Mọi skip khác hoặc lỗi test làm bước tổng hợp thất bại; số pass luôn trừ số skip thực tế, không đổi SKIP thành PASS.
 
 ## Các kiểm chứng mới
 

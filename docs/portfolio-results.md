@@ -6,16 +6,18 @@ Tạo từ lượt final gate kết thúc ngày **2026-11-13**. Đây là thực
 
 | Nhóm | Kết quả thực thi | Minh chứng |
 |---|---|---|
-| Python với OPA thật | 359 passed, 0 failed/error/skipped; 136.701 giây | [JUnit](../evidence/pytest.xml) |
+| Python với OPA thật | 359 passed, 0 failed/error, 0 platform skip; 122.992 giây | [JUnit](../evidence/pytest.xml) |
 | Docker, mTLS, RLS, policy/recovery | 32/32 PASS | [Live JSON](../evidence/live-validation.json) |
 | Phê duyệt, expiry và pagination | 22/22 PASS | [Governance JSON](../evidence/governance.json) |
 | Trình duyệt thật | 10/10 PASS; Playwright Chromium | [Browser JSON](../evidence/browser.json) |
 | Sao lưu và khôi phục cô lập | 34 file, PostgreSQL restored, SQLite integrity OK | [Recovery JSON](../evidence/recovery.json) |
-| Snapshot kiểm toán khôi phục | 456 snapshot xác thực/giải mã; nội dung không công bố | Recovery JSON |
+| Snapshot kiểm toán khôi phục | 818 snapshot xác thực/giải mã; nội dung không công bố | Recovery JSON |
 | Dependency audit Python | 64 packages; 0 lỗ hổng đã biết được trả về tại thời điểm quét | [pip-audit JSON](../evidence/dependency-audit.json) |
 | Source trong lượt gate | Không đổi; mọi bước exit 0 | [Receipt](../evidence/verification-receipt.json) |
 
-Source/config SHA-256: `bc584ed53864266c92e52531259bc1b06003caf821fa1d0de192daa3b1e6eb65`. Receipt bao phủ code/config/test, không bao phủ mọi tài liệu hoặc chứng minh nguồn chưa bị administrator thay. Log đầy đủ lưu cục bộ và trong CI artifact; các file log không được đưa vào source package.
+Source/config SHA-256: `9f85738a5121953af22d8f2106b2f204e61e0698ca865c34ce24e64e8d77c7cd`. Receipt bao phủ code/config/test, không bao phủ mọi tài liệu hoặc chứng minh nguồn chưa bị administrator thay. Log đầy đủ lưu cục bộ và trong CI artifact; các file log không được đưa vào source package.
+
+Chỉ ca kiểm tra Windows file-sharing được phép SKIP trên Linux. Mọi skip khác hoặc lỗi test làm bước tổng hợp thất bại; số pass luôn trừ số skip thực tế, không đổi SKIP thành PASS.
 
 ## Các kiểm chứng mới
 
@@ -56,9 +58,9 @@ Số dòng customer thực tế: **2003**; financial: **2**; production: **2**. 
 
 | Concurrent clients | Mẫu | P50 ms | P95 ms | RPS | Lỗi | OPA P50 ms |
 |---|---:|---:|---:|---:|---:|---:|
-| 1 | 100 | 54.27 | 100.34 | 16.67 | 0 | 1.089 |
-| 5 | 100 | 91.42 | 136.57 | 51.01 | 0 | 1.134 |
-| 10 | 100 | 186.94 | 242.14 | 51.84 | 0 | 1.079 |
+| 1 | 100 | 52.00 | 96.77 | 17.88 | 0 | 1.138 |
+| 5 | 100 | 95.22 | 143.52 | 50.32 | 0 | 1.163 |
+| 10 | 100 | 193.21 | 267.56 | 49.17 | 0 | 1.159 |
 
 Nguồn: [summary](../evidence/benchmark.json), [raw CSV](../evidence/benchmark-samples.csv). Script sinh báo cáo đối chiếu lại phân vị từ CSV, không chép số mục tiêu. Đây là đo trên một máy có thể chia sẻ CPU/IO với dự án khác; không phải production capacity, open-loop load test hay bằng chứng nhân quả so sánh với các bản cũ.
 
@@ -68,4 +70,4 @@ Gateway/host là trusted PEP; khóa client là file; risk model heuristic. Audit
 
 Ảnh browser dùng chứng chỉ client thật và bỏ cảnh báo CA demo ở browser context. Python live/benchmark xác minh CA và hostname đầy đủ. [Ảnh thực nghiệm](../evidence/images/) và [security review](security-review.md) mô tả phạm vi cụ thể. Kết quả ngày 23/10/2026 nằm riêng trong [history](../evidence/history/2026-10-23/README.md), không dùng làm số mới.
 
-Pytest ghi nhận 15 deprecation warnings; không có failure/error/skip. pip-audit khuyến nghị bổ sung hash toàn bộ dependency lock; file hiện tại khóa phiên bản, chưa dùng --require-hashes.
+Pytest ghi nhận 15 deprecation warnings; không có failure/error/skip trong lượt Windows này. pip-audit khuyến nghị bổ sung hash toàn bộ dependency lock; file hiện tại khóa phiên bản, chưa dùng --require-hashes.

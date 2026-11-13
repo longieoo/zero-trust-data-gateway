@@ -1,74 +1,74 @@
 {
-  "executed_at": "2026-11-13T13:52:56.578295+00:00",
+  "executed_at": "2026-11-13T14:02:39.519995+00:00",
   "application_version": "5.1.0",
-  "source_sha256": "bc584ed53864266c92e52531259bc1b06003caf821fa1d0de192daa3b1e6eb65",
+  "source_sha256": "9f85738a5121953af22d8f2106b2f204e61e0698ca865c34ce24e64e8d77c7cd",
   "source_unchanged": true,
   "passed": true,
   "steps": [
     {
       "step": "lint",
       "returncode": 0,
-      "elapsed_seconds": 0.20488009999826318,
+      "elapsed_seconds": 0.14237770000181627,
       "log": "lint.log"
     },
     {
       "step": "pytest",
       "returncode": 0,
-      "elapsed_seconds": 139.39040379999642,
+      "elapsed_seconds": 125.52606920000107,
       "log": "pytest.log"
     },
     {
       "step": "ui-unit",
       "returncode": 0,
-      "elapsed_seconds": 1.9562365000019781,
+      "elapsed_seconds": 0.08024160000059055,
       "log": "ui-unit.log"
     },
     {
       "step": "compose",
       "returncode": 0,
-      "elapsed_seconds": 13.056464100001904,
+      "elapsed_seconds": 11.4726926000003,
       "log": "compose.log"
     },
     {
       "step": "live",
       "returncode": 0,
-      "elapsed_seconds": 5.159543699999631,
+      "elapsed_seconds": 4.885628200005158,
       "log": "live.log"
     },
     {
       "step": "governance",
       "returncode": 0,
-      "elapsed_seconds": 63.84227110000211,
+      "elapsed_seconds": 64.1232474999997,
       "log": "governance.log"
     },
     {
       "step": "backup",
       "returncode": 0,
-      "elapsed_seconds": 7.648016999999527,
+      "elapsed_seconds": 8.282014099997468,
       "log": "backup.log"
     },
     {
       "step": "restore",
       "returncode": 0,
-      "elapsed_seconds": 3.2220938000027672,
+      "elapsed_seconds": 3.5177096000043093,
       "log": "restore.log"
     },
     {
       "step": "browser",
       "returncode": 0,
-      "elapsed_seconds": 9.582440300000599,
+      "elapsed_seconds": 6.765915099997073,
       "log": "browser.log"
     },
     {
       "step": "benchmark",
       "returncode": 0,
-      "elapsed_seconds": 12.796776499999396,
+      "elapsed_seconds": 11.553184500000498,
       "log": "benchmark.log"
     },
     {
       "step": "dependency-audit",
       "returncode": 0,
-      "elapsed_seconds": 2.512774000002537,
+      "elapsed_seconds": 6.890514400001848,
       "log": "dependency-audit.log"
     }
   ],
@@ -116,7 +116,7 @@
     "scripts/start.sh": "75ff693171ebeaa879f934cf98655b2562f7e2de2e2cec9e283c77eaf6f4c92d",
     "scripts/stop.ps1": "b4b68ac6fd861066114e813152024cf7a31ef7e7d9d8548354d4bf7c2cbd9f9f",
     "scripts/stop.sh": "c58da6129188a156e4ba3c0de0ea4b8250ec2e6b130b19a3cac6f84a74ea6bc9",
-    "scripts/summarize_evidence.py": "cd27dbf821d412bca2c6f61cb9a037e2372f30b09ee1425b75c2e1a72dd06b93",
+    "scripts/summarize_evidence.py": "f2d85cb21113c62f8a9988e70b1fd501bdb76bfb550d9743a01d53e0090c40ae",
     "scripts/validate_demo.py": "d15a3bf64da368525d928a5fbf0bc28121815928601f7da4a453f688aee280d0",
     "scripts/validate_gateway.py": "4d32043e1187b7e5b94541ed72af0b79616f2fcffedf093f02ec38e20ad426da",
     "scripts/validate_gateway_failures.py": "cb450c02e480afd208ffdf5d87d65d4453a2d678b4a38a7a41be74f45e67e86d",
