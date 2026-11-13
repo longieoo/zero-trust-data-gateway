@@ -1,7 +1,7 @@
 {
-  "executed_at": "2026-11-13T13:38:51.864633+00:00",
+  "executed_at": "2026-11-13T13:52:20.504998+00:00",
   "target": "CA-verified HTTPS local demo Gateway",
-  "elapsed_seconds": 63.14823040000192,
+  "elapsed_seconds": 63.166586400002416,
   "complete": true,
   "passed": 22,
   "checks": [
@@ -10,7 +10,7 @@
       "pass": true,
       "evidence": {
         "http": 403,
-        "request_id": "cca885b5-bc27-4e28-8f06-7330534cf9b0",
+        "request_id": "b4efa5ac-4e17-43fa-9342-5162455ef4ef",
         "decision": "DENY",
         "reason_code": "ACCESS_APPROVAL_REQUIRED",
         "db_queried": false,
@@ -26,7 +26,7 @@
       "pass": true,
       "evidence": {
         "http": 201,
-        "request_id": "dc326884-be12-4ab8-8337-3295a6db8a3b",
+        "request_id": "1f3a4f4b-49ea-4f08-8f04-f1ac2e13a6ba",
         "decision": null,
         "reason_code": null,
         "db_queried": null,
@@ -42,7 +42,7 @@
       "pass": true,
       "evidence": {
         "http": 403,
-        "request_id": "49ff2ccd-663a-4c1e-bbc8-a2b8ad8a000a",
+        "request_id": "af01165b-dfe1-45c7-9dd5-0e39b3e08747",
         "decision": "DENY",
         "reason_code": "UNTRUSTED_CONTEXT",
         "db_queried": false,
@@ -58,7 +58,7 @@
       "pass": true,
       "evidence": {
         "http": 404,
-        "request_id": "892085aa-ecbf-4e07-9c17-70e921b78547",
+        "request_id": "3f37c688-ef87-4699-a4bf-9d83dbb72484",
         "decision": "DENY",
         "reason_code": "UNKNOWN_RESOURCE",
         "db_queried": false,
@@ -74,7 +74,7 @@
       "pass": true,
       "evidence": {
         "http": 201,
-        "request_id": "26122257-b36d-414a-aaa0-3b10c9c2ae14",
+        "request_id": "3087cfed-3e8e-4c1b-a55f-d0282ff3a014",
         "decision": null,
         "reason_code": null,
         "db_queried": null,
@@ -90,7 +90,7 @@
       "pass": true,
       "evidence": {
         "http": 403,
-        "request_id": "47fb3879-c2e7-4402-be83-b197581324a8",
+        "request_id": "c9c26f04-4434-4724-823b-c5bfe76fadcc",
         "decision": "DENY",
         "reason_code": "UNTRUSTED_CONTEXT",
         "db_queried": false,
@@ -106,14 +106,14 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "dc326884-be12-4ab8-8337-3295a6db8a3b",
+        "request_id": "1f3a4f4b-49ea-4f08-8f04-f1ac2e13a6ba",
         "decision": null,
         "reason_code": null,
         "db_queried": null,
         "status": "APPROVED",
         "tenant_id": "demo",
-        "expires_at": "2026-11-13T13:52:49+00:00",
-        "approved_at": "2026-11-13T13:37:49+00:00",
+        "expires_at": "2026-11-13T14:06:18+00:00",
+        "approved_at": "2026-11-13T13:51:18+00:00",
         "revoked_at": null
       }
     },
@@ -122,7 +122,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "ea5942cc-87f5-4872-828d-fa08a1e3b51e",
+        "request_id": "c181ac09-9f6d-495b-b3c0-9edb467c640a",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -138,15 +138,15 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "dc326884-be12-4ab8-8337-3295a6db8a3b",
+        "request_id": "1f3a4f4b-49ea-4f08-8f04-f1ac2e13a6ba",
         "decision": null,
         "reason_code": null,
         "db_queried": null,
         "status": "REVOKED",
         "tenant_id": "demo",
-        "expires_at": "2026-11-13T13:52:49+00:00",
-        "approved_at": "2026-11-13T13:37:49+00:00",
-        "revoked_at": "2026-11-13T13:37:49+00:00"
+        "expires_at": "2026-11-13T14:06:18+00:00",
+        "approved_at": "2026-11-13T13:51:18+00:00",
+        "revoked_at": "2026-11-13T13:51:18+00:00"
       }
     },
     {
@@ -154,7 +154,7 @@
       "pass": true,
       "evidence": {
         "http": 403,
-        "request_id": "f529f661-ae3a-45d4-83a8-3263db0da003",
+        "request_id": "5ad4b063-86dd-4cbe-aa20-5d2d1c90f728",
         "decision": "DENY",
         "reason_code": "ACCESS_APPROVAL_REQUIRED",
         "db_queried": false,
@@ -170,7 +170,7 @@
       "pass": true,
       "evidence": {
         "http": 201,
-        "request_id": "d0a41abe-9c1a-42dd-8d19-f4b6865a00f3",
+        "request_id": "8f31a671-ca7f-4049-9fdd-2485e50f5915",
         "decision": null,
         "reason_code": null,
         "db_queried": null,
@@ -186,14 +186,14 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "d0a41abe-9c1a-42dd-8d19-f4b6865a00f3",
+        "request_id": "8f31a671-ca7f-4049-9fdd-2485e50f5915",
         "decision": null,
         "reason_code": null,
         "db_queried": null,
         "status": "APPROVED",
         "tenant_id": "demo",
-        "expires_at": "2026-11-13T13:52:49+00:00",
-        "approved_at": "2026-11-13T13:37:49+00:00",
+        "expires_at": "2026-11-13T14:06:18+00:00",
+        "approved_at": "2026-11-13T13:51:18+00:00",
         "revoked_at": null
       }
     },
@@ -202,7 +202,7 @@
       "pass": true,
       "evidence": {
         "http": 403,
-        "request_id": "dd014514-eb14-4f60-af19-c450c2bfafef",
+        "request_id": "deaa6eac-ea91-4908-972c-d6d4cb5e7675",
         "decision": "DENY",
         "reason_code": "INSUFFICIENT_CLEARANCE",
         "db_queried": false,
@@ -218,7 +218,7 @@
       "pass": true,
       "evidence": {
         "http": 201,
-        "request_id": "f4cfb0e5-10f2-49dc-8415-669880ca6a40",
+        "request_id": "b13ca651-3f0a-4516-91c6-46c56d75c5bd",
         "decision": null,
         "reason_code": null,
         "db_queried": null,
@@ -234,14 +234,14 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "f4cfb0e5-10f2-49dc-8415-669880ca6a40",
+        "request_id": "b13ca651-3f0a-4516-91c6-46c56d75c5bd",
         "decision": null,
         "reason_code": null,
         "db_queried": null,
         "status": "APPROVED",
         "tenant_id": "demo",
-        "expires_at": "2026-11-13T13:38:49+00:00",
-        "approved_at": "2026-11-13T13:37:49+00:00",
+        "expires_at": "2026-11-13T13:52:18+00:00",
+        "approved_at": "2026-11-13T13:51:18+00:00",
         "revoked_at": null
       }
     },
@@ -250,7 +250,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "22e13130-4f3b-4e16-b2e3-8cacd364a7ca",
+        "request_id": "e144d399-564e-4b41-9b39-2da0d3ed3cc2",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -274,7 +274,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "0097c8c1-76ba-41b1-8faf-11afc4773f8f",
+        "request_id": "5f0ce2ec-b145-48e1-b09a-2e4ab596d0e7",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -292,7 +292,7 @@
       "pass": true,
       "evidence": {
         "http": 422,
-        "request_id": "9838a015-0f73-41d5-8697-f42107ab66f9",
+        "request_id": "46b20477-0258-4320-b226-6df049468732",
         "decision": "DENY",
         "reason_code": "INVALID_CURSOR",
         "db_queried": false,
@@ -308,7 +308,7 @@
       "pass": true,
       "evidence": {
         "http": 422,
-        "request_id": "61bfc52f-b898-4ead-8f1a-696c8485da56",
+        "request_id": "8b0a36ff-3f68-4d1b-a546-10fa4bab3960",
         "decision": "DENY",
         "reason_code": "INVALID_CURSOR",
         "db_queried": false,
@@ -324,7 +324,7 @@
       "pass": true,
       "evidence": {
         "http": 422,
-        "request_id": "7efaee86-6f58-43a1-aa46-740a67bef881",
+        "request_id": "75696f44-30f0-4fe1-8a2b-ec0244995e9b",
         "decision": "DENY",
         "reason_code": "INVALID_CURSOR",
         "db_queried": false,
@@ -340,7 +340,7 @@
       "pass": true,
       "evidence": {
         "http": 403,
-        "request_id": "e74153d6-278d-4e61-ba62-231c0bd33478",
+        "request_id": "65b805c2-2189-4bb5-8d8d-1cb603c4914b",
         "decision": "DENY",
         "reason_code": "ACCESS_APPROVAL_REQUIRED",
         "db_queried": false,
@@ -349,8 +349,8 @@
         "expires_at": null,
         "approved_at": null,
         "revoked_at": null,
-        "checked_at": "2026-11-13T13:38:51.713572+00:00",
-        "grant_expires_at": "2026-11-13T13:38:49+00:00"
+        "checked_at": "2026-11-13T13:52:20.350522+00:00",
+        "grant_expires_at": "2026-11-13T13:52:18+00:00"
       }
     }
   ]

@@ -223,6 +223,11 @@ def test_failed_database_dump_restarts_previous_services_and_releases_lock(tmp_p
     def compose(*args, **kwargs):
         calls.append(args)
         if args[0] == "ps":
+            if "--format" in args:
+                return SimpleNamespace(stdout=json.dumps([
+                    {"Service": "gateway", "State": "running", "Health": "healthy"},
+                    {"Service": "proxy", "State": "running", "Health": ""},
+                ]))
             return SimpleNamespace(stdout="postgres\ngateway\nproxy\n")
         if "pg_dump" in args:
             raise subprocess.CalledProcessError(1, ["pg_dump"])
@@ -232,6 +237,80 @@ def test_failed_database_dump_restarts_previous_services_and_releases_lock(tmp_p
     with pytest.raises(subprocess.CalledProcessError):
         create_backup(runtime / "backups/test.ztbackup")
     assert ("stop", "--timeout", "30", "proxy", "gateway") in calls
-    assert ("start", "--wait", "--wait-timeout", "90", "gateway", "proxy") in calls
+    assert ("start", "gateway", "proxy") in calls
+    assert all("--wait" not in call and "--wait-timeout" not in call for call in calls)
     assert not (runtime / "server/releases/.activation.lock").exists()
     assert not (runtime / "backups/test.ztbackup").exists()
+
+
+@pytest.mark.parametrize("format", ["array", "ndjson"])
+def test_backup_restart_polls_portable_status_until_services_healthy(monkeypatch, format):
+    from types import SimpleNamespace
+    from scripts.backup_restore import restart_services
+
+    calls = []
+    statuses = iter([
+        [{"Service": "gateway", "State": "running", "Health": "starting"},
+         {"Service": "proxy", "State": "running", "Health": ""}],
+        [{"Service": "gateway", "State": "running", "Health": "healthy"},
+         {"Service": "proxy", "State": "running", "Health": ""},
+         {"Service": "unrelated", "State": "exited", "Health": "unhealthy"}],
+    ])
+
+    def compose(*args, **kwargs):
+        calls.append(args)
+        if args[0] == "start":
+            return SimpleNamespace(stdout="")
+        records = next(statuses)
+        text = json.dumps(records) if format == "array" else "\n".join(map(json.dumps, records))
+        return SimpleNamespace(stdout=text)
+
+    monkeypatch.setattr("scripts.backup_restore.time.sleep", lambda seconds: None)
+    restart_services(compose, ["gateway", "proxy"])
+    assert calls == [
+        ("start", "gateway", "proxy"),
+        ("ps", "--all", "--format", "json", "gateway", "proxy"),
+        ("ps", "--all", "--format", "json", "gateway", "proxy"),
+    ]
+
+
+@pytest.mark.parametrize("records", [
+    [],
+    [{"Service": "gateway", "State": "exited", "Health": ""}],
+    [{"Service": "gateway", "State": "running", "Health": "unhealthy"}],
+])
+def test_backup_restart_fails_when_previously_running_service_does_not_recover(records):
+    from types import SimpleNamespace
+    from scripts.backup_restore import restart_services
+
+    def compose(*args, **kwargs):
+        return SimpleNamespace(stdout=json.dumps(records) if args[0] == "ps" else "")
+
+    with pytest.raises(ValueError, match="recovery timed out"):
+        restart_services(compose, ["gateway"], timeout=0)
+
+
+@pytest.mark.parametrize("command", ["start", "ps"])
+def test_backup_restart_surfaces_compose_stderr(command):
+    import subprocess
+    from types import SimpleNamespace
+    from scripts.backup_restore import restart_services
+
+    def compose(*args, **kwargs):
+        if args[0] == command:
+            raise subprocess.CalledProcessError(1, ["compose", *args], stderr="unsupported test option")
+        return SimpleNamespace(stdout="")
+
+    with pytest.raises(ValueError, match=f"Compose {command} failed.*unsupported test option"):
+        restart_services(compose, ["gateway"])
+
+
+def test_backup_restart_rejects_malformed_status_output():
+    from types import SimpleNamespace
+    from scripts.backup_restore import restart_services
+
+    def compose(*args, **kwargs):
+        return SimpleNamespace(stdout="invalid-json" if args[0] == "ps" else "")
+
+    with pytest.raises(ValueError, match="Invalid Compose JSON"):
+        restart_services(compose, ["gateway"])

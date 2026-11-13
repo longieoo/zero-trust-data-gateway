@@ -6,16 +6,16 @@ Tạo từ lượt final gate kết thúc ngày **2026-11-13**. Đây là thực
 
 | Nhóm | Kết quả thực thi | Minh chứng |
 |---|---|---|
-| Python với OPA thật | 351 passed, 0 failed/error/skipped; 119.570 giây | [JUnit](../evidence/pytest.xml) |
+| Python với OPA thật | 359 passed, 0 failed/error/skipped; 136.701 giây | [JUnit](../evidence/pytest.xml) |
 | Docker, mTLS, RLS, policy/recovery | 32/32 PASS | [Live JSON](../evidence/live-validation.json) |
 | Phê duyệt, expiry và pagination | 22/22 PASS | [Governance JSON](../evidence/governance.json) |
 | Trình duyệt thật | 10/10 PASS; Playwright Chromium | [Browser JSON](../evidence/browser.json) |
 | Sao lưu và khôi phục cô lập | 34 file, PostgreSQL restored, SQLite integrity OK | [Recovery JSON](../evidence/recovery.json) |
-| Snapshot kiểm toán khôi phục | 94 snapshot xác thực/giải mã; nội dung không công bố | Recovery JSON |
+| Snapshot kiểm toán khôi phục | 456 snapshot xác thực/giải mã; nội dung không công bố | Recovery JSON |
 | Dependency audit Python | 64 packages; 0 lỗ hổng đã biết được trả về tại thời điểm quét | [pip-audit JSON](../evidence/dependency-audit.json) |
 | Source trong lượt gate | Không đổi; mọi bước exit 0 | [Receipt](../evidence/verification-receipt.json) |
 
-Source/config SHA-256: `2213b917c19ad0b72465dff722c8c354bc0047e071ba2cc3d6cd64f1ff1fa405`. Receipt bao phủ code/config/test, không bao phủ mọi tài liệu hoặc chứng minh nguồn chưa bị administrator thay. Log đầy đủ lưu cục bộ và trong CI artifact; các file log không được đưa vào source package.
+Source/config SHA-256: `bc584ed53864266c92e52531259bc1b06003caf821fa1d0de192daa3b1e6eb65`. Receipt bao phủ code/config/test, không bao phủ mọi tài liệu hoặc chứng minh nguồn chưa bị administrator thay. Log đầy đủ lưu cục bộ và trong CI artifact; các file log không được đưa vào source package.
 
 ## Các kiểm chứng mới
 
@@ -56,9 +56,9 @@ Số dòng customer thực tế: **2003**; financial: **2**; production: **2**. 
 
 | Concurrent clients | Mẫu | P50 ms | P95 ms | RPS | Lỗi | OPA P50 ms |
 |---|---:|---:|---:|---:|---:|---:|
-| 1 | 100 | 65.60 | 90.88 | 14.55 | 0 | 1.208 |
-| 5 | 100 | 95.35 | 167.67 | 47.49 | 0 | 1.079 |
-| 10 | 100 | 175.59 | 286.72 | 49.75 | 0 | 1.175 |
+| 1 | 100 | 54.27 | 100.34 | 16.67 | 0 | 1.089 |
+| 5 | 100 | 91.42 | 136.57 | 51.01 | 0 | 1.134 |
+| 10 | 100 | 186.94 | 242.14 | 51.84 | 0 | 1.079 |
 
 Nguồn: [summary](../evidence/benchmark.json), [raw CSV](../evidence/benchmark-samples.csv). Script sinh báo cáo đối chiếu lại phân vị từ CSV, không chép số mục tiêu. Đây là đo trên một máy có thể chia sẻ CPU/IO với dự án khác; không phải production capacity, open-loop load test hay bằng chứng nhân quả so sánh với các bản cũ.
 

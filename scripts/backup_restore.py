@@ -244,6 +244,58 @@ def restore_files(archive_path, key_path, destination):
     return destination, manifest
 
 
+def restart_services(compose, services, timeout=90):
+    """Use portable Compose start and poll only previously running services.
+
+    Compose versions differ in support/behavior of start --wait. Status JSON
+    also changed from a JSON array to newline-delimited objects across versions.
+    """
+    if not services:
+        return
+
+    def command(*args):
+        try:
+            return compose(*args, capture_output=True, text=True)
+        except subprocess.CalledProcessError as error:
+            detail = error.stderr or error.stdout or f"exit status {error.returncode}"
+            if isinstance(detail, bytes):
+                detail = detail.decode("utf-8", errors="replace")
+            raise ValueError(f"Compose {args[0]} failed during backup recovery: {detail.strip()[:2000]}") from error
+
+    command("start", *services)
+    deadline = time.monotonic() + timeout
+    observed = {}
+    while True:
+        result = command("ps", "--all", "--format", "json", *services)
+        try:
+            try:
+                records = json.loads(result.stdout or "[]")
+            except json.JSONDecodeError:
+                records = [json.loads(line) for line in result.stdout.splitlines() if line.strip()]
+            if isinstance(records, dict):
+                records = [records]
+            if not isinstance(records, list) or any(not isinstance(row, dict) for row in records):
+                raise ValueError("Expected Compose status objects")
+        except (json.JSONDecodeError, TypeError, ValueError) as error:
+            raise ValueError("Invalid Compose JSON status during backup recovery") from error
+        observed = {
+            service: [
+                (str(row.get("State", "")).lower(), str(row.get("Health") or "").lower())
+                for row in records if row.get("Service") == service
+            ]
+            for service in services
+        }
+        if all(
+            states and all(state == "running" and health in {"", "none", "healthy"} for state, health in states)
+            for states in observed.values()
+        ):
+            return
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise ValueError(f"Backup service recovery timed out after {timeout}s: {observed}")
+        time.sleep(min(1, remaining))
+
+
 def create_backup(output=None):
     from scripts.portfolio import RUNTIME, compose
 
@@ -329,9 +381,7 @@ def create_backup(output=None):
         handle.close()
         lock.unlink()
         if running:
-            compose(
-                "start", "--wait", "--wait-timeout", "90", *reversed(running), capture_output=True
-            )
+            restart_services(compose, list(reversed(running)))
     return output
 
 

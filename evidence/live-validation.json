@@ -1,7 +1,7 @@
 {
-  "executed_at": "2026-11-13T13:37:48.070838+00:00",
+  "executed_at": "2026-11-13T13:51:16.645802+00:00",
   "target": "local abac-complete",
-  "elapsed_seconds": 3.9389093999998295,
+  "elapsed_seconds": 4.326885599999514,
   "passed": 32,
   "checks": [
     {
@@ -54,7 +54,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "6803c127-f3aa-4f20-b3f6-5e4cf637bfda",
+        "request_id": "65ba13c5-8733-4cb8-ade5-8535716faf93",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -91,7 +91,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "f5cb9178-0ac4-46c3-a312-2485bb146eac",
+        "request_id": "b9281538-3f62-49f2-a6cb-b60eb34cd8a0",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -124,7 +124,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "736888a0-ac7a-4bb4-ac7b-52c44870b03a",
+        "request_id": "dd450a8e-421b-421c-a82c-b0a87bf96bcd",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -157,7 +157,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "ea96e911-b3ce-4876-a985-c7ab7c5f034a",
+        "request_id": "263daa60-c955-4db7-983b-39ed4f25cb7e",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -194,7 +194,7 @@
       "pass": true,
       "evidence": {
         "http": 403,
-        "request_id": "e4e0868e-9f0c-448f-9ef8-52aef842bd48",
+        "request_id": "56d244d9-9c3b-4391-8a7d-d9e6b891bf2b",
         "decision": "DENY",
         "reason_code": "UNTRUSTED_DEVICE",
         "db_queried": false,
@@ -208,7 +208,7 @@
       "pass": true,
       "evidence": {
         "http": 401,
-        "request_id": "d32d90d8-8e70-4d61-a086-cc557b103a8b",
+        "request_id": "ae735b96-ce3d-442d-9e03-2309543d0be5",
         "decision": "DENY",
         "reason_code": "AUTHENTICATION_FAILED",
         "db_queried": false,
@@ -222,7 +222,7 @@
       "pass": true,
       "evidence": {
         "http": 403,
-        "request_id": "a3cc14a3-c636-4316-b049-eebe8b45e766",
+        "request_id": "02c5dc1f-af61-4fe8-a06f-90e102bafa40",
         "decision": "DENY",
         "reason_code": "INSUFFICIENT_CLEARANCE",
         "db_queried": false,
@@ -298,7 +298,7 @@
             "limit": 100
           }
         },
-        "evaluated_at": "2026-11-13T13:37:45.241727+00:00",
+        "evaluated_at": "2026-11-13T13:51:13.504106+00:00",
         "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
         "scope": "decision_only_no_historical_rows",
         "db_queried": false
@@ -328,7 +328,7 @@
         "tenant_id": "demo",
         "records": [
           {
-            "request_id": "a3cc14a3-c636-4316-b049-eebe8b45e766",
+            "request_id": "02c5dc1f-af61-4fe8-a06f-90e102bafa40",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -353,7 +353,7 @@
             }
           },
           {
-            "request_id": "e4e0868e-9f0c-448f-9ef8-52aef842bd48",
+            "request_id": "56d244d9-9c3b-4391-8a7d-d9e6b891bf2b",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -376,7 +376,7 @@
             }
           },
           {
-            "request_id": "ea96e911-b3ce-4876-a985-c7ab7c5f034a",
+            "request_id": "263daa60-c955-4db7-983b-39ed4f25cb7e",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -445,7 +445,7 @@
             }
           },
           {
-            "request_id": "f5cb9178-0ac4-46c3-a312-2485bb146eac",
+            "request_id": "b9281538-3f62-49f2-a6cb-b60eb34cd8a0",
             "status": "COMPARED",
             "changes": [
               "MASK_CHANGED"
@@ -510,7 +510,7 @@
             }
           },
           {
-            "request_id": "6803c127-f3aa-4f20-b3f6-5e4cf637bfda",
+            "request_id": "65ba13c5-8733-4cb8-ade5-8535716faf93",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -579,72 +579,7 @@
             }
           },
           {
-            "request_id": "fe79a388-b0fd-4532-abb7-886287f91d23",
-            "status": "COMPARED",
-            "changes": [
-              "UNCHANGED"
-            ],
-            "before": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "columns": [
-                  "id",
-                  "department",
-                  "event",
-                  "severity"
-                ],
-                "limit": 100,
-                "mask": [],
-                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
-                "resource": "production",
-                "row_scope": {
-                  "kind": "department",
-                  "value": "data"
-                },
-                "tenant_id": "demo",
-                "version": 1
-              }
-            },
-            "after": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "version": 1,
-                "tenant_id": "demo",
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "production",
-                "columns": [
-                  "id",
-                  "department",
-                  "event",
-                  "severity"
-                ],
-                "mask": [],
-                "row_scope": {
-                  "kind": "department",
-                  "value": "data"
-                },
-                "limit": 100
-              }
-            }
-          },
-          {
-            "request_id": "8ee95e94-137d-4846-b7c7-98c092f24bee",
-            "status": "UNREPLAYABLE"
-          },
-          {
-            "request_id": "6c441b6e-186a-492b-95b8-f2ddba588bb1",
-            "status": "UNREPLAYABLE"
-          },
-          {
-            "request_id": "13148e7f-0b21-40a7-8693-a27685017fbe",
+            "request_id": "a01ab5d6-810a-4d52-823f-c18e9a7fbbea",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -713,7 +648,7 @@
             }
           },
           {
-            "request_id": "dbd96eb7-eeab-48fc-a744-9bdfd7ca36c7",
+            "request_id": "26b240da-b23f-4963-8f3f-4f57e2f0725e",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -782,203 +717,7 @@
             }
           },
           {
-            "request_id": "8dc22045-d228-4ae0-ac15-ddb0bcb1d016",
-            "status": "COMPARED",
-            "changes": [
-              "UNCHANGED"
-            ],
-            "before": {
-              "decision": "DENY",
-              "reason_code": "INSUFFICIENT_CLEARANCE",
-              "winning_policies": [
-                "P06",
-                "P05"
-              ],
-              "obligations": null
-            },
-            "after": {
-              "decision": "DENY",
-              "reason_code": "INSUFFICIENT_CLEARANCE",
-              "winning_policies": [
-                "P06",
-                "P05"
-              ],
-              "obligations": null
-            }
-          },
-          {
-            "request_id": "b2ef4841-5e2f-4112-b176-1065c0d22fb0",
-            "status": "COMPARED",
-            "changes": [
-              "UNCHANGED"
-            ],
-            "before": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "columns": [
-                  "id",
-                  "department",
-                  "event",
-                  "severity"
-                ],
-                "limit": 100,
-                "mask": [],
-                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
-                "resource": "production",
-                "row_scope": {
-                  "kind": "department",
-                  "value": "data"
-                },
-                "tenant_id": "demo",
-                "version": 1
-              }
-            },
-            "after": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "version": 1,
-                "tenant_id": "demo",
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "production",
-                "columns": [
-                  "id",
-                  "department",
-                  "event",
-                  "severity"
-                ],
-                "mask": [],
-                "row_scope": {
-                  "kind": "department",
-                  "value": "data"
-                },
-                "limit": 100
-              }
-            }
-          },
-          {
-            "request_id": "87965bd5-1e0e-4e63-9f03-2293f480f5df",
-            "status": "COMPARED",
-            "changes": [
-              "UNCHANGED"
-            ],
-            "before": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "columns": [
-                  "id",
-                  "department",
-                  "event",
-                  "severity"
-                ],
-                "limit": 100,
-                "mask": [],
-                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
-                "resource": "production",
-                "row_scope": {
-                  "kind": "department",
-                  "value": "data"
-                },
-                "tenant_id": "demo",
-                "version": 1
-              }
-            },
-            "after": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "version": 1,
-                "tenant_id": "demo",
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "production",
-                "columns": [
-                  "id",
-                  "department",
-                  "event",
-                  "severity"
-                ],
-                "mask": [],
-                "row_scope": {
-                  "kind": "department",
-                  "value": "data"
-                },
-                "limit": 100
-              }
-            }
-          },
-          {
-            "request_id": "73ff080b-1104-48d5-a1d7-77de1186702b",
-            "status": "COMPARED",
-            "changes": [
-              "UNCHANGED"
-            ],
-            "before": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "columns": [
-                  "id",
-                  "department",
-                  "event",
-                  "severity"
-                ],
-                "limit": 100,
-                "mask": [],
-                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
-                "resource": "production",
-                "row_scope": {
-                  "kind": "department",
-                  "value": "data"
-                },
-                "tenant_id": "demo",
-                "version": 1
-              }
-            },
-            "after": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "version": 1,
-                "tenant_id": "demo",
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "production",
-                "columns": [
-                  "id",
-                  "department",
-                  "event",
-                  "severity"
-                ],
-                "mask": [],
-                "row_scope": {
-                  "kind": "department",
-                  "value": "data"
-                },
-                "limit": 100
-              }
-            }
-          },
-          {
-            "request_id": "47616620-e2b3-437f-9384-e21b6aab7740",
+            "request_id": "7c42e150-026d-4b9d-a1cc-014e50790515",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1047,14 +786,10 @@
             }
           },
           {
-            "request_id": "5a2dfb79-7eb3-47aa-a87b-5250cc381174",
-            "status": "UNREPLAYABLE"
-          },
-          {
-            "request_id": "f616f81a-51c0-4139-9cd4-0b926b7fb95d",
+            "request_id": "6025a04d-dc1b-4699-9b44-fe746d0a2a59",
             "status": "COMPARED",
             "changes": [
-              "MASK_CHANGED"
+              "UNCHANGED"
             ],
             "before": {
               "decision": "ALLOW",
@@ -1072,12 +807,16 @@
                   "national_id"
                 ],
                 "limit": 100,
-                "mask": [],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
                 "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
                 "resource": "customers",
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "tenant_id": "demo",
                 "version": 1
@@ -1108,19 +847,15 @@
                   "national_id"
                 ],
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "limit": 100
               }
             }
           },
           {
-            "request_id": "711a69ff-6b20-40d1-b2f4-9c6aeadb9e1a",
-            "status": "UNREPLAYABLE"
-          },
-          {
-            "request_id": "68072c50-53c0-4265-b9c8-95b418058c25",
+            "request_id": "702f08c7-3de3-438c-8879-13ed944933ac",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1146,283 +881,11 @@
                   "salary",
                   "national_id"
                 ],
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "customers",
-                "row_scope": {
-                  "kind": "all",
-                  "value": null
-                },
-                "tenant_id": "demo",
-                "version": 1
-              }
-            },
-            "after": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "version": 1,
-                "tenant_id": "demo",
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "customers",
-                "columns": [
-                  "id",
-                  "department",
-                  "name",
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "mask": [
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "row_scope": {
-                  "kind": "all",
-                  "value": null
-                },
-                "limit": 100
-              }
-            }
-          },
-          {
-            "request_id": "905feaec-42c0-4d8f-8f52-de721b61c38f",
-            "status": "COMPARED",
-            "changes": [
-              "UNCHANGED"
-            ],
-            "before": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "columns": [
-                  "id",
-                  "department",
-                  "name",
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "limit": 100,
-                "mask": [
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "customers",
-                "row_scope": {
-                  "kind": "all",
-                  "value": null
-                },
-                "tenant_id": "demo",
-                "version": 1
-              }
-            },
-            "after": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "version": 1,
-                "tenant_id": "demo",
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "customers",
-                "columns": [
-                  "id",
-                  "department",
-                  "name",
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "mask": [
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "row_scope": {
-                  "kind": "all",
-                  "value": null
-                },
-                "limit": 100
-              }
-            }
-          },
-          {
-            "request_id": "d5119e1a-ef11-4996-b468-a38d4ef4acbe",
-            "status": "COMPARED",
-            "changes": [
-              "UNCHANGED"
-            ],
-            "before": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "columns": [
-                  "id",
-                  "department",
-                  "name",
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "limit": 100,
-                "mask": [
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "customers",
-                "row_scope": {
-                  "kind": "all",
-                  "value": null
-                },
-                "tenant_id": "demo",
-                "version": 1
-              }
-            },
-            "after": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "version": 1,
-                "tenant_id": "demo",
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "customers",
-                "columns": [
-                  "id",
-                  "department",
-                  "name",
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "mask": [
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "row_scope": {
-                  "kind": "all",
-                  "value": null
-                },
-                "limit": 100
-              }
-            }
-          },
-          {
-            "request_id": "d4f0fded-ba63-47cc-9398-06d185b98e5f",
-            "status": "COMPARED",
-            "changes": [
-              "UNCHANGED"
-            ],
-            "before": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "columns": [
-                  "id",
-                  "department",
-                  "name",
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "limit": 100,
-                "mask": [
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "customers",
-                "row_scope": {
-                  "kind": "all",
-                  "value": null
-                },
-                "tenant_id": "demo",
-                "version": 1
-              }
-            },
-            "after": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "version": 1,
-                "tenant_id": "demo",
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "customers",
-                "columns": [
-                  "id",
-                  "department",
-                  "name",
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "mask": [
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "row_scope": {
-                  "kind": "all",
-                  "value": null
-                },
-                "limit": 100
-              }
-            }
-          },
-          {
-            "request_id": "ba9fa7a9-113c-4007-ae65-4142e49f88ae",
-            "status": "COMPARED",
-            "changes": [
-              "MASK_CHANGED"
-            ],
-            "before": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "columns": [
-                  "id",
-                  "department",
-                  "name",
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "limit": 100,
-                "mask": [],
                 "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
                 "resource": "customers",
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "tenant_id": "demo",
                 "version": 1
@@ -1453,80 +916,15 @@
                   "national_id"
                 ],
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "limit": 100
               }
             }
           },
           {
-            "request_id": "32aaf811-dcbd-45d1-b9ec-13b38f0a6e40",
-            "status": "COMPARED",
-            "changes": [
-              "MASK_CHANGED"
-            ],
-            "before": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "columns": [
-                  "id",
-                  "department",
-                  "name",
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "limit": 100,
-                "mask": [],
-                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
-                "resource": "customers",
-                "row_scope": {
-                  "kind": "all",
-                  "value": null
-                },
-                "tenant_id": "demo",
-                "version": 1
-              }
-            },
-            "after": {
-              "decision": "ALLOW",
-              "reason_code": "ROLE_PERMISSION",
-              "winning_policies": [
-                "P01"
-              ],
-              "obligations": {
-                "version": 1,
-                "tenant_id": "demo",
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
-                "resource": "customers",
-                "columns": [
-                  "id",
-                  "department",
-                  "name",
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "mask": [
-                  "email",
-                  "salary",
-                  "national_id"
-                ],
-                "row_scope": {
-                  "kind": "all",
-                  "value": null
-                },
-                "limit": 100
-              }
-            }
-          },
-          {
-            "request_id": "a159d07f-c081-4426-ba12-cd11aa0f809d",
+            "request_id": "dcebe470-923d-445c-b7e3-831b2e721a09",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1552,11 +950,11 @@
                   "salary",
                   "national_id"
                 ],
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
                 "resource": "customers",
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "tenant_id": "demo",
                 "version": 1
@@ -1587,15 +985,15 @@
                   "national_id"
                 ],
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "limit": 100
               }
             }
           },
           {
-            "request_id": "838d6600-2578-4ee6-811b-d8bbefae5b20",
+            "request_id": "e2b1f506-44c7-41bf-9d6a-099b12e6fadd",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1621,11 +1019,11 @@
                   "salary",
                   "national_id"
                 ],
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
                 "resource": "customers",
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "tenant_id": "demo",
                 "version": 1
@@ -1656,15 +1054,15 @@
                   "national_id"
                 ],
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "limit": 100
               }
             }
           },
           {
-            "request_id": "a8ae2b24-e9c7-416b-b093-6dedc3c605fe",
+            "request_id": "fbbf6910-b290-461a-8cc9-626ecda3fb76",
             "status": "COMPARED",
             "changes": [
               "UNCHANGED"
@@ -1690,11 +1088,11 @@
                   "salary",
                   "national_id"
                 ],
-                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
                 "resource": "customers",
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "tenant_id": "demo",
                 "version": 1
@@ -1725,18 +1123,18 @@
                   "national_id"
                 ],
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "limit": 100
               }
             }
           },
           {
-            "request_id": "1e124497-280e-4dda-b977-d8b479c28a53",
+            "request_id": "504ef068-3860-4f97-b4d5-e0e2a1b2c9bc",
             "status": "COMPARED",
             "changes": [
-              "MASK_CHANGED"
+              "UNCHANGED"
             ],
             "before": {
               "decision": "ALLOW",
@@ -1754,12 +1152,16 @@
                   "national_id"
                 ],
                 "limit": 100,
-                "mask": [],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
                 "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
                 "resource": "customers",
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "tenant_id": "demo",
                 "version": 1
@@ -1790,18 +1192,18 @@
                   "national_id"
                 ],
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "limit": 100
               }
             }
           },
           {
-            "request_id": "abdde2c2-fc5a-478f-a206-24cdc7438828",
+            "request_id": "a5e8f9b6-674c-47b8-95bd-32918c44c93a",
             "status": "COMPARED",
             "changes": [
-              "MASK_CHANGED"
+              "UNCHANGED"
             ],
             "before": {
               "decision": "ALLOW",
@@ -1819,12 +1221,16 @@
                   "national_id"
                 ],
                 "limit": 100,
-                "mask": [],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
                 "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
                 "resource": "customers",
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "tenant_id": "demo",
                 "version": 1
@@ -1855,18 +1261,18 @@
                   "national_id"
                 ],
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "limit": 100
               }
             }
           },
           {
-            "request_id": "f52be509-cb1c-4ed0-968b-dea5fcc8a1bc",
+            "request_id": "69070380-ddd6-490f-9d95-d276f5052249",
             "status": "COMPARED",
             "changes": [
-              "MASK_CHANGED"
+              "UNCHANGED"
             ],
             "before": {
               "decision": "ALLOW",
@@ -1884,12 +1290,16 @@
                   "national_id"
                 ],
                 "limit": 100,
-                "mask": [],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
                 "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
                 "resource": "customers",
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "tenant_id": "demo",
                 "version": 1
@@ -1920,15 +1330,981 @@
                   "national_id"
                 ],
                 "row_scope": {
-                  "kind": "all",
-                  "value": null
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "c558f026-6917-4c33-b0cd-0af4b262b580",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "b11d73b8-98c8-4658-8977-0f6ea1a336e6",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "c674f5d1-d0c2-4999-b429-ede6ec80cf24",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "c83eef97-748f-46a6-a81b-80b8c6ebbe9d",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "54dbbb90-a30e-45dc-b3ad-46c9342d19f2",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "dd16ba85-ebe5-414c-b5a6-7f95b94bc397",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "67d42c26-338b-4d09-802d-f0f8c1bef9e0",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "2982d19b-7694-4169-b1c1-d27e538c28a9",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "833d1711-313d-4571-a5bc-dbdaadc92136",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "cccaba9a-4352-4f26-827e-8f5679433e2b",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "08f0b5bf-67dc-460b-a293-5cd04cc42688",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "ceacb4e1-98dd-404f-b191-f3209609eac7",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "18c79542-aae3-4a4a-a810-5a7e8a819313",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "limit": 100
+              }
+            }
+          },
+          {
+            "request_id": "c07367a7-abf7-4ef2-a38a-6076de669c67",
+            "status": "COMPARED",
+            "changes": [
+              "UNCHANGED"
+            ],
+            "before": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "limit": 100,
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "policy_revision": "84974de5f75b4cc0a53912dede4aab68fbd15f9575c7b6ca5e966e814467c62f",
+                "resource": "customers",
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
+                },
+                "tenant_id": "demo",
+                "version": 1
+              }
+            },
+            "after": {
+              "decision": "ALLOW",
+              "reason_code": "ROLE_PERMISSION",
+              "winning_policies": [
+                "P01"
+              ],
+              "obligations": {
+                "version": 1,
+                "tenant_id": "demo",
+                "policy_revision": "22775cff2f9b42b798374cb4bd4b37ff856e068d587999191b5a392d149ba32a",
+                "resource": "customers",
+                "columns": [
+                  "id",
+                  "department",
+                  "name",
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "mask": [
+                  "email",
+                  "salary",
+                  "national_id"
+                ],
+                "row_scope": {
+                  "kind": "department",
+                  "value": "marketing"
                 },
                 "limit": 100
               }
             }
           }
         ],
-        "compared": 26,
+        "compared": 30,
         "coverage_note": "Bounded historical sample; not a proof over all future inputs",
         "db_queried": false
       }
@@ -1949,7 +2325,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "b63f00f1-0efd-4e97-ad58-db151985686f",
+        "request_id": "2c0a6efa-ddef-4032-b1bd-bb86552d3d77",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -1986,7 +2362,7 @@
       "pass": true,
       "evidence": {
         "http": 503,
-        "request_id": "3403bea2-d106-4e12-ac08-212323bca947",
+        "request_id": "7e76a62e-5dd6-4068-a1a0-71db04688156",
         "decision": "DENY",
         "reason_code": "INVALID_POLICY",
         "db_queried": false,
@@ -2000,7 +2376,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "4ad538e7-6dbb-47b2-9670-a1f973bb5b4b",
+        "request_id": "5e4b9746-315b-479d-8d73-418560ded018",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -2033,7 +2409,7 @@
       "pass": true,
       "evidence": {
         "http": 503,
-        "request_id": "40cf33d7-0341-40b9-9841-6a5d3cf55c48",
+        "request_id": "88e0547e-3ac9-4099-a321-8c67fa0e345e",
         "decision": "DENY",
         "reason_code": "OPA_UNAVAILABLE",
         "db_queried": false,
@@ -2047,7 +2423,7 @@
       "pass": true,
       "evidence": {
         "http": 200,
-        "request_id": "84efa896-9e99-431f-9be3-e69b8d079c99",
+        "request_id": "5d9213f8-132a-45ff-b79c-e2e480f1006b",
         "decision": "ALLOW",
         "reason_code": "ROLE_PERMISSION",
         "db_queried": true,
@@ -2091,7 +2467,7 @@
       "pass": true,
       "evidence": {
         "http": 401,
-        "request_id": "6d8b9cc5-4316-4bcc-98d1-587e0dd59e8d",
+        "request_id": "a5baba20-36a8-46a7-80a2-05fd7b79ac2f",
         "decision": "DENY",
         "reason_code": "AUTHENTICATION_FAILED",
         "db_queried": false,
@@ -2194,7 +2570,7 @@
       "name": "two independent session clients observe revocation",
       "pass": true,
       "evidence": {
-        "revoke_and_read_ms": 4.381393000585376,
+        "revoke_and_read_ms": 4.781927000294672,
         "scope": "two_store_instances_not_two_gateway_replicas"
       }
     },
